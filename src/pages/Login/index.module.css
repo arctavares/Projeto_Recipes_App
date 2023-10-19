@@ -1,0 +1,117 @@
+.LoginContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.LogoContainer {
+    background-color: #41197F;
+    width: 100%;
+    height: 50%;
+    color: white;
+
+}
+
+.LoginForm {
+    padding-top:100px;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.LoginForm form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.logoDiv {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.logoDiv img {
+    width: 70%;
+    margin-bottom: -100px;
+}
+
+.vegetablesDiv {
+    width: 100vw;
+    height: 40vh;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+}
+
+.vegetablesDiv img {
+    width: 80%;
+    padding-bottom: 10%;
+}
+
+@media (min-width: 550px) {
+    .vegetablesDiv img {
+        width: 60vw;
+    }
+    .logoDiv img {
+        width: 40%;
+    }
+}
+
+@media (min-width: 810px) {
+    .vegetablesDiv img {
+        width: 50vw;
+    }
+    .logoDiv img {
+        width: 35%;
+    }
+    .logoDiv {
+        align-items: center;
+    }
+    .LoginForm form{
+        width: 50%;
+    }
+    
+}
+
+@media (min-width: 1126px) {
+    .vegetablesDiv img {
+        width: 25vw;
+    }
+    .logoDiv img {
+        width: 20%;
+    }
+    .logoDiv {
+        padding-top: 7%;
+    }
+    .LoginForm {
+        height: 70%;
+    }
+}
+
+
+@media (min-width: 2000px) {
+    .vegetablesDiv img {
+        width: 20vw;
+    }
+    .logoDiv img {
+        width: 20%;
+    }
+    .logoDiv {
+        padding-top: 7%;
+    }
+    .LoginForm {
+        height: 70%;
+    }
+}
