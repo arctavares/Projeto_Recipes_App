@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import validator from 'validator';
+import { useNavigate } from 'react-router-dom';
 import styles from './index.module.css';
 import logo from '../../images/logo Recipes App.png';
 import tomatoes from '../../images/tomate.png';
 
 function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -20,6 +23,7 @@ function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('drinksToken', 1);
+    navigate('/meals');
   }
 
   function renderInputs() { // eslint purposes
