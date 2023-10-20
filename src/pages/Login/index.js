@@ -16,6 +16,12 @@ function Login() {
     setButtonDisabled(!(isEmailValid && isPasswordValid));
   }, [email, password]);
 
+  function handleClick() {
+    localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('drinksToken', 1);
+  }
+
   function renderInputs() { // eslint purposes
     return (
       <>
@@ -54,6 +60,7 @@ function Login() {
           className="btn btn-primary"
           data-testid="login-submit-btn"
           disabled={ buttonDisabled }
+          onClick={ handleClick }
         >
           Submit
         </button>
