@@ -7,7 +7,7 @@ import Login from './pages/Login';
 function App() {
   return (
     <Routes>
-      <Route path='/' element={ <Login /> }/>
+      <Route path="/" element={ <Login /> } />
     </Routes>
   );
 }
