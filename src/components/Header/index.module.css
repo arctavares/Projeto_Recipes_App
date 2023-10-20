@@ -1,0 +1,56 @@
+.HeaderContainer {
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+}
+
+.nav {
+  background-color: #fcdc36;
+  display: flex;
+  height: 40%;
+}
+
+.appTitle {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+}
+
+.icons {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 30%;
+}
+
+.RecipesIcon {
+  height: 80%;
+}
+
+.RecipesTitle {
+  height: 45%;
+}
+
+.searchIcon {
+  height: 70%;
+}
+
+.profileIcon {
+  height: 70%;
+}
+
+.titleContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+
+}
+
+.title {
+  color: #41197f;
+  font-family: Epilogue , sans-serif;
+  font-weight: 900;
+}
