@@ -8,7 +8,7 @@ import profileIcon from '../../images/profileIcon.png';
 import DrinkIcon from '../../images/icone-drink.png';
 import PlateIcon from '../../images/icone-prato.png';
 
-function Header({ showTopBtn = true, title }) {
+function Header({ showTopBtn = true, title = 'Meals' }) {
   function showDrinkOrPlate() {
     if (title.toLowerCase() === 'meals') {
       return (

@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import MealsOrDrinks from '../pages/MealsOrDrinks';
 
 const mockGetItem = jest.fn();
 const mockSetItem = jest.fn();
@@ -55,5 +56,26 @@ describe('Test Login Page', () => {
     expect(mockSetItem).toHaveBeenNthCalledWith(1, 'user', '{"email":"email@email.com"}');
     expect(mockSetItem).toHaveBeenNthCalledWith(2, 'mealsToken', 1);
     expect(mockSetItem).toHaveBeenNthCalledWith(3, 'drinksToken', 1);
+  });
+});
+
+describe('Test component header', () => {
+  it('Test if all elements are rendered', () => {
+    render(
+      <BrowserRouter>
+        <MealsOrDrinks />
+      </BrowserRouter>,
+    );
+    const recipesAppIcon = screen.getByAltText('Recipes App');
+    expect(recipesAppIcon).toBeInTheDocument();
+
+    const recipesAppTitle = screen.getByAltText('Recipes App Title');
+    expect(recipesAppTitle).toBeInTheDocument();
+
+    const searchIcon = screen.getByAltText('searchIcon');
+    expect(searchIcon).toBeInTheDocument();
+
+    const profileIcon = screen.getByAltText('Profile');
+    expect(profileIcon).toBeInTheDocument();
   });
 });
