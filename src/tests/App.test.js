@@ -78,4 +78,42 @@ describe('Test component header', () => {
     const profileIcon = screen.getByAltText('Profile');
     expect(profileIcon).toBeInTheDocument();
   });
+  it('Test if input shows on search click', () => {
+    render(
+      <BrowserRouter>
+        <MealsOrDrinks />
+      </BrowserRouter>,
+    );
+
+    const searchIcon = screen.getByAltText('searchIcon');
+    expect(searchIcon).toBeInTheDocument();
+
+    expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
+
+    userEvent.click(searchIcon);
+
+    expect(screen.queryByTestId('search-input')).toBeInTheDocument();
+  });
+  it('Test if title is rendered as Meals', () => {
+    render(
+      <BrowserRouter>
+        <MealsOrDrinks title="Meals" />
+      </BrowserRouter>,
+    );
+
+    const title = screen.getByTestId('page-title');
+    expect(title).toBeInTheDocument();
+    expect(title).toHaveTextContent('Meals');
+  });
+  it('Test if title is rendered as Drinks', () => {
+    render(
+      <BrowserRouter>
+        <MealsOrDrinks title="Drinks" />
+      </BrowserRouter>,
+    );
+
+    const title = screen.getByTestId('page-title');
+    expect(title).toBeInTheDocument();
+    expect(title).toHaveTextContent('Drinks');
+  });
 });
