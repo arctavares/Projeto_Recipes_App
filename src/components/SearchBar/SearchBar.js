@@ -1,5 +1,6 @@
+import { useContext, useState } from 'react';
 import styles from './index.module.css';
-import PropTypes from 'prop-types';
+
 import {
   filterByFirstLetter,
   filterByIngredient,
@@ -9,9 +10,13 @@ import {
   filterDrinkByFirstLetter,
   filterDrinkByIngredient,
   filterDrinkByName } from '../../service/DrinksAPI';
-import { useState } from 'react';
+import RecipesContext from '../../context';
 
-function SearchBar({ title }) {
+function SearchBar() {
+  const {
+    currentTitle: title,
+  } = useContext(RecipesContext);
+
   const [radioBtn, setRadioBtn] = useState('');
   const [mealOrDrinksData, setMealOrDrinksData] = useState([]);
   const [input, setInput] = useState('');
@@ -110,7 +115,3 @@ function SearchBar({ title }) {
 }
 
 export default SearchBar;
-
-SearchBar.propTypes = {
-    title: PropTypes.string.isRequired,
-}

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './index.module.css';
 import RecipesAppTitle from '../../images/logo text Recipes app.png';
 import RecipesAppIcon from '../../images/ícone Recipes app.png';
@@ -9,9 +9,14 @@ import profileIcon from '../../images/profileIcon.png';
 import DrinkIcon from '../../images/icone-drink.png';
 import PlateIcon from '../../images/icone-prato.png';
 import SearchBar from '../SearchBar/SearchBar';
+import RecipesContext from '../../context';
 
-function Header({ showTopBtn = true, title = 'Meals' }) {
+function Header({ showTopBtn = true }) {
   const [searchInputDisabled, setSearchInputDisabled] = useState(true);
+
+  const {
+    currentTitle: title,
+  } = useContext(RecipesContext);
 
   function showDrinkOrPlate() {
     if (title.toLowerCase() === 'meals') {
@@ -73,7 +78,7 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
       </div>
       {
         searchInputDisabled ? '' : (
-          <SearchBar title={ title } />
+          <SearchBar />
         )
       }
 
@@ -84,6 +89,9 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
 export default Header;
 
 Header.propTypes = {
-  showTopBtn: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
+  showTopBtn: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  showTopBtn: true,
 };

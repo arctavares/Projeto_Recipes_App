@@ -1,9 +1,17 @@
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 import Header from '../../components/Header/Header';
+import RecipesContext from '../../context';
 
 function MealsOrDrinks({ title }) {
+  const {
+    setCurrentTitle,
+  } = useContext(RecipesContext);
+
+  setCurrentTitle(title);
+
   return (
-    <Header title={ title } />
+    <Header />
   );
 }
 
