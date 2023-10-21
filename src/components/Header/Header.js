@@ -8,9 +8,17 @@ import searchIcon from '../../images/searchIcon.png';
 import profileIcon from '../../images/profileIcon.png';
 import DrinkIcon from '../../images/icone-drink.png';
 import PlateIcon from '../../images/icone-prato.png';
+import {
+  filterByFirstLetter,
+  filterByIngredient,
+  filterByName,
+} from '../../service/MealsAPI';
 
 function Header({ showTopBtn = true, title = 'Meals' }) {
   const [searchInputDisabled, setSearchInputDisabled] = useState(true);
+  const [radioBtn, setRadioBtn] = useState('');
+  const [input, setInput] = useState('');
+  const [mealOrDrinksData, setMealOrDrinksData] = useState([]);
 
   function showDrinkOrPlate() {
     if (title.toLowerCase() === 'meals') {
@@ -29,20 +37,59 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
       <div className={ styles.radioContainer }>
         <label htmlFor="ingredient">
           Ingredient
-          <input type="radio" id="ingredient" data-testid="ingredient-search-radio" />
+          <input
+            type="radio"
+            id="ingredient"
+            data-testid="ingredient-search-radio"
+            value="ingredient"
+            name="radioBtn"
+            onChange={ (e) => setRadioBtn(e.target.value) }
+          />
         </label>
 
         <label htmlFor="name">
           Name
-          <input type="radio" id="name" data-testid="name-search-radio" />
+          <input
+            type="radio"
+            id="name"
+            data-testid="name-search-radio"
+            value="name"
+            name="radioBtn"
+            onChange={ (e) => setRadioBtn(e.target.value) }
+          />
         </label>
 
         <label htmlFor="firstLetter">
           First Letter
-          <input type="radio" id="firstLetter" data-testid="first-letter-search-radio" />
+          <input
+            type="radio"
+            id="firstLetter"
+            data-testid="first-letter-search-radio"
+            value="firstLetter"
+            name="radioBtn"
+            onChange={ (e) => setRadioBtn(e.target.value) }
+          />
         </label>
       </div>
     );
+  }
+
+  async function handleClick() {
+    if (radioBtn === 'ingredient') {
+      const data = await filterByIngredient(input);
+      setMealOrDrinksData(data);
+    } else if (radioBtn === 'name') {
+      const data = await filterByName(input);
+      setMealOrDrinksData(data);
+    } else if (radioBtn === 'firstLetter') {
+      if (input.length === 1) {
+        const data = await filterByFirstLetter(input);
+        setMealOrDrinksData(data);
+      } else if (input.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      }
+    }
+    console.log(mealOrDrinksData);
   }
 
   return (
@@ -100,6 +147,8 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
                 placeholder="Search"
                 data-testid="search-input"
                 className="form-control"
+                value={ input }
+                onChange={ (e) => setInput(e.target.value) }
               />
               <div className={ styles.formButtons }>
                 {renderRadioContainer()}
@@ -107,6 +156,7 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
                   type="button"
                   className={ `${styles.searchBtn} btn btn-warning` }
                   data-testid="exec-search-btn"
+                  onClick={ handleClick }
                 >
                   Search
                 </button>
