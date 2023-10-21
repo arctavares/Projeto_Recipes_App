@@ -70,65 +70,9 @@
   width: 10vw;
 }
 
-.searchInputContainer {
-  align-items: center;
-  display: flex;
-  justify-content: center;
 
-}
-
-.formContainer {
-  align-items: center;
-  background-color: #41197f;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
-  width: 90%;
-}
-
-.formContainer input {
-  width: 100%;
-}
-
-.formButtons {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 80%;
-}
-
-.searchBtn {
-  background-color: #fcc436;
-  border-radius: 10px;
-  color: white;
-  font-family: Epilogue , sans-serif;
-  margin-bottom: 1vh;
-  width: 100%;
-}
-
-.radioContainer {
-  color: white;
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-}
-
-.radioContainer label {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 10px;
-}
 
 @media ( min-width : 600px ) {
-
-  .formContainer {
-    width: 50%;
-  }
 
   .drinkOrPlateIcon {
     width: 8vw;
