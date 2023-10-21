@@ -13,6 +13,10 @@ import {
   filterByIngredient,
   filterByName,
 } from '../../service/MealsAPI';
+import {
+  filterDrinkByFirstLetter,
+  filterDrinkByIngredient,
+  filterDrinkByName } from '../../service/DrinksAPI';
 
 function Header({ showTopBtn = true, title = 'Meals' }) {
   const [searchInputDisabled, setSearchInputDisabled] = useState(true);
@@ -76,14 +80,20 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
 
   async function handleClick() {
     if (radioBtn === 'ingredient') {
-      const data = await filterByIngredient(input);
+      const data = title === 'Meals'
+        ? await filterByIngredient(input)
+        : await filterDrinkByIngredient(input);
       setMealOrDrinksData(data);
     } else if (radioBtn === 'name') {
-      const data = await filterByName(input);
+      const data = title === 'Meals'
+        ? await filterByName(input)
+        : await filterDrinkByName(input);
       setMealOrDrinksData(data);
     } else if (radioBtn === 'firstLetter') {
       if (input.length === 1) {
-        const data = await filterByFirstLetter(input);
+        const data = title === 'Meals'
+          ? await filterByFirstLetter(input)
+          : await filterDrinkByFirstLetter(input);
         setMealOrDrinksData(data);
       } else if (input.length > 1) {
         global.alert('Your search must have only 1 (one) character');
