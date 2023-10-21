@@ -24,6 +24,16 @@
   width: 30%;
 }
 
+.icons button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  outline: inherit;
+  padding: 0;
+}
+
 .RecipesIcon {
   height: 80%;
 }
@@ -57,4 +67,43 @@
 
 .drinkOrPlateIcon {
   width: 10vw;
+}
+
+.searchInputContainer {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+}
+
+.formContainer {
+  align-items: center;
+  background-color: #41197f;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 10vh;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.formContainer input {
+  width: 100%;
+}
+
+.formButtons {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.searchBtn {
+  background-color: #fcc436;
+  border-radius: 10px;
+  color: white;
+  font-family: Epilogue , sans-serif;
+  margin-bottom: 0.2vh;
+  width: 100%;
 }

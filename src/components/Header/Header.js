@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import styles from './index.module.css';
 import RecipesAppTitle from '../../images/logo text Recipes app.png';
 import RecipesAppIcon from '../../images/ícone Recipes app.png';
@@ -9,6 +10,8 @@ import DrinkIcon from '../../images/icone-drink.png';
 import PlateIcon from '../../images/icone-prato.png';
 
 function Header({ showTopBtn = true, title = 'Meals' }) {
+  const [searchInputDisabled, setSearchInputDisabled] = useState(true);
+
   function showDrinkOrPlate() {
     if (title.toLowerCase() === 'meals') {
       return (
@@ -39,12 +42,18 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
         <div className={ styles.icons }>
           {
             showTopBtn && (
-              <img
-                src={ searchIcon }
-                alt="searchIcon"
-                className={ styles.searchIcon }
-                data-testid="search-top-btn"
-              />
+              <button
+                type="button"
+                onClick={ () => setSearchInputDisabled(!searchInputDisabled) }
+              >
+                <img
+                  src={ searchIcon }
+                  alt="searchIcon"
+                  className={ styles.searchIcon }
+                  data-testid="search-top-btn"
+
+                />
+              </button>
             )
           }
           <Link to="/profile">
@@ -61,6 +70,19 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
         {showDrinkOrPlate()}
         <h1 className={ styles.title } data-testid="page-title">{title}</h1>
       </div>
+      {
+        searchInputDisabled ? '' : (
+          <div className={ styles.searchInputContainer }>
+            <div className={ styles.formContainer }>
+              <input type="text" placeholder="Search" data-testid="search-input" />
+              <div className={ styles.formButtons }>
+                <button type="button" className={ styles.searchBtn }>Search</button>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
     </div>
   );
 }
