@@ -24,6 +24,27 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
     }
   }
 
+  function renderRadioContainer() {
+    return (
+      <div className={ styles.radioContainer }>
+        <label htmlFor="ingredient">
+          Ingredient
+          <input type="radio" id="ingredient" data-testid="ingredient-search-radio" />
+        </label>
+
+        <label htmlFor="name">
+          Name
+          <input type="radio" id="name" data-testid="name-search-radio" />
+        </label>
+
+        <label htmlFor="firstLetter">
+          First Letter
+          <input type="radio" id="firstLetter" data-testid="first-letter-search-radio" />
+        </label>
+      </div>
+    );
+  }
+
   return (
     <div className={ styles.HeaderContainer }>
       <div className={ styles.nav }>
@@ -74,9 +95,21 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
         searchInputDisabled ? '' : (
           <div className={ styles.searchInputContainer }>
             <div className={ styles.formContainer }>
-              <input type="text" placeholder="Search" data-testid="search-input" />
+              <input
+                type="text"
+                placeholder="Search"
+                data-testid="search-input"
+                className="form-control"
+              />
               <div className={ styles.formButtons }>
-                <button type="button" className={ styles.searchBtn }>Search</button>
+                {renderRadioContainer()}
+                <button
+                  type="button"
+                  className={ `${styles.searchBtn} btn btn-warning` }
+                  data-testid="exec-search-btn"
+                >
+                  Search
+                </button>
               </div>
             </div>
           </div>
