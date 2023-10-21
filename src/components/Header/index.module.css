@@ -1,7 +1,7 @@
 .HeaderContainer {
   display: flex;
   flex-direction: column;
-  height: 20vh;
+  height: 22vh;
 }
 
 .nav {
@@ -53,4 +53,8 @@
   color: #41197f;
   font-family: Epilogue , sans-serif;
   font-weight: 900;
+}
+
+.drinkOrPlateIcon {
+  width: 10vw;
 }

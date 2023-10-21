@@ -1,9 +1,14 @@
+import PropTypes from 'prop-types';
 import Header from '../../components/Header/Header';
 
-function MealsOrDrinks() {
+function MealsOrDrinks({ title }) {
   return (
-    <Header />
+    <Header title={ title } />
   );
 }
 
 export default MealsOrDrinks;
+
+MealsOrDrinks.propTypes = {
+  title: PropTypes.string.isRequired,
+};

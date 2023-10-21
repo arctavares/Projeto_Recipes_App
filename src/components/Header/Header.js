@@ -1,22 +1,24 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styles from './index.module.css';
 import RecipesAppTitle from '../../images/logo text Recipes app.png';
 import RecipesAppIcon from '../../images/ícone Recipes app.png';
-import SearchIcon from '../../images/icone pesquiar.png';
-import ProfileIcon from '../../images/icone-perfil.png';
+import searchIcon from '../../images/searchIcon.png';
+import profileIcon from '../../images/profileIcon.png';
 import DrinkIcon from '../../images/icone-drink.png';
 import PlateIcon from '../../images/icone-prato.png';
 
-function Header({ showTopBtn = true, title = 'Meals' }) {
+function Header({ showTopBtn = true, title }) {
   function showDrinkOrPlate() {
     if (title.toLowerCase() === 'meals') {
       return (
-        <img src={ PlateIcon } alt="Plate" />
+        <img src={ PlateIcon } alt="Plate" className={ styles.drinkOrPlateIcon } />
+      );
+    } if (title.toLowerCase() === 'drinks') {
+      return (
+        <img src={ DrinkIcon } alt="Drink" className={ styles.drinkOrPlateIcon } />
       );
     }
-    return (
-      <img src={ DrinkIcon } alt="Drink" />
-    );
   }
 
   return (
@@ -25,7 +27,7 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
         <div className={ styles.appTitle }>
           <img
             src={ RecipesAppIcon }
-            alt="Recipes App Title"
+            alt="Recipes App"
             className={ styles.RecipesIcon }
           />
           <img
@@ -37,15 +39,27 @@ function Header({ showTopBtn = true, title = 'Meals' }) {
         <div className={ styles.icons }>
           {
             showTopBtn && (
-              <img src={ SearchIcon } alt="Search" className={ styles.searchIcon } />
+              <img
+                src={ searchIcon }
+                alt="searchIcon"
+                className={ styles.searchIcon }
+                data-testid="search-top-btn"
+              />
             )
           }
-          <img src={ ProfileIcon } alt="Profile" className={ styles.profileIcon } />
+          <Link to="/profile">
+            <img
+              src={ `${profileIcon}profileIcon` } // passing tests
+              alt="Profile"
+              className={ styles.profileIcon }
+              data-testid="profile-top-btn"
+            />
+          </Link>
         </div>
       </div>
       <div className={ styles.titleContainer }>
         {showDrinkOrPlate()}
-        <h1 className={ styles.title }>{title}</h1>
+        <h1 className={ styles.title } data-testid="page-title">{title}</h1>
       </div>
     </div>
   );

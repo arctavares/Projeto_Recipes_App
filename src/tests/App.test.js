@@ -21,7 +21,7 @@ describe('Test Login Page', () => {
     mockSetItem.mockClear();
   });
 
-  it('Test if the form is render', () => {
+  it('Test if the form is rendered', () => {
     render(
       <BrowserRouter>
         <App />
