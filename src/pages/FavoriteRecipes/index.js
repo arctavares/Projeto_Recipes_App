@@ -1,8 +1,16 @@
+import { useContext } from 'react';
 import Header from '../../components/Header/Header';
+import RecipesContext from '../../context';
 
 function FavoriteRecipes() {
+  const {
+    setCurrentTitle,
+  } = useContext(RecipesContext);
+
+  setCurrentTitle('Favorite Recipes');
+
   return (
-    <Header title="Favorite Recipes" showTopBtn={ false } />
+    <Header showTopBtn={ false } />
   );
 }
 

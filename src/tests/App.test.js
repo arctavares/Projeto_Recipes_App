@@ -1,9 +1,35 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import MealsOrDrinks from '../pages/MealsOrDrinks';
+
+import {
+  filterByIngredient,
+} from '../service/MealsAPI';
+
+import RecipesContext from '../context';
+import SearchBar from '../components/SearchBar/SearchBar';
+import Provider from '../Provider';
+
+const mockContextValue = {
+  currentTitle: 'Meals',
+};
+
+const SEARCH_INPUT = 'search-input';
+
+jest.mock('../service/MealsAPI', () => ({
+  filterByFirstLetter: jest.fn(),
+  filterByIngredient: jest.fn(),
+  filterByName: jest.fn(),
+}));
+
+jest.mock('../service/DrinksAPI', () => ({
+  filterDrinkByFirstLetter: jest.fn(),
+  filterDrinkByIngredient: jest.fn(),
+  filterDrinkByName: jest.fn(),
+}));
 
 const mockGetItem = jest.fn();
 const mockSetItem = jest.fn();
@@ -63,7 +89,9 @@ describe('Test component header', () => {
   it('Test if all elements are rendered', () => {
     render(
       <BrowserRouter>
-        <MealsOrDrinks />
+        <Provider value={ { currentTitle: 'Meals', setCurrentTitle: jest.fn() } }>
+          <MealsOrDrinks title="Meals" />
+        </Provider>
       </BrowserRouter>,
     );
     const recipesAppIcon = screen.getByAltText('Recipes App');
@@ -81,23 +109,27 @@ describe('Test component header', () => {
   it('Test if input shows on search click', () => {
     render(
       <BrowserRouter>
-        <MealsOrDrinks />
+        <Provider value={ { currentTitle: 'Meals', setCurrentTitle: jest.fn() } }>
+          <MealsOrDrinks title="Meals" />
+        </Provider>
       </BrowserRouter>,
     );
 
     const searchIcon = screen.getByAltText('searchIcon');
     expect(searchIcon).toBeInTheDocument();
 
-    expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
+    expect(screen.queryByTestId(SEARCH_INPUT)).not.toBeInTheDocument();
 
     userEvent.click(searchIcon);
 
-    expect(screen.queryByTestId('search-input')).toBeInTheDocument();
+    expect(screen.queryByTestId(SEARCH_INPUT)).toBeInTheDocument();
   });
   it('Test if title is rendered as Meals', () => {
     render(
       <BrowserRouter>
-        <MealsOrDrinks title="Meals" />
+        <Provider value={ { currentTitle: 'Meals', setCurrentTitle: jest.fn() } }>
+          <MealsOrDrinks title="Meals" />
+        </Provider>
       </BrowserRouter>,
     );
 
@@ -108,12 +140,55 @@ describe('Test component header', () => {
   it('Test if title is rendered as Drinks', () => {
     render(
       <BrowserRouter>
-        <MealsOrDrinks title="Drinks" />
+        <Provider value={ { currentTitle: 'Drinks', setCurrentTitle: jest.fn() } }>
+          <MealsOrDrinks title="Drinks" />
+        </Provider>
       </BrowserRouter>,
     );
 
     const title = screen.getByTestId('page-title');
     expect(title).toBeInTheDocument();
     expect(title).toHaveTextContent('Drinks');
+  });
+});
+
+describe('Test SearchBar component', () => {
+  it('renders SearchBar component', () => {
+    const { getByTestId } = render(
+      <RecipesContext.Provider value={ mockContextValue }>
+        <SearchBar />
+      </RecipesContext.Provider>,
+    );
+
+    const searchInput = getByTestId(SEARCH_INPUT);
+    const ingredientRadio = getByTestId('ingredient-search-radio');
+    const nameRadio = getByTestId('name-search-radio');
+    const firstLetterRadio = getByTestId('first-letter-search-radio');
+    const searchButton = getByTestId('exec-search-btn');
+
+    expect(searchInput).toBeInTheDocument();
+    expect(ingredientRadio).toBeInTheDocument();
+    expect(nameRadio).toBeInTheDocument();
+    expect(firstLetterRadio).toBeInTheDocument();
+    expect(searchButton).toBeInTheDocument();
+  });
+  it('handles search button click with ingredient radio selected', async () => {
+    const { getByTestId } = render(
+      <RecipesContext.Provider value={ mockContextValue }>
+        <SearchBar />
+      </RecipesContext.Provider>,
+    );
+
+    const input = getByTestId(SEARCH_INPUT);
+    const ingredientRadio = getByTestId('ingredient-search-radio');
+    const searchButton = getByTestId('exec-search-btn');
+
+    userEvent.type(input, 'chicken');
+    userEvent.click(ingredientRadio);
+    userEvent.click(searchButton);
+
+    await waitFor(() => {
+      expect(filterByIngredient).toHaveBeenCalledWith('chicken');
+    });
   });
 });
