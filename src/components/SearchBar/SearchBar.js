@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styles from './index.module.css';
 
 import {
@@ -17,9 +18,19 @@ function SearchBar() {
     currentTitle: title,
   } = useContext(RecipesContext);
 
+  const navigate = useNavigate();
+
   const [radioBtn, setRadioBtn] = useState('');
   const [mealOrDrinksData, setMealOrDrinksData] = useState([]);
   const [input, setInput] = useState('');
+
+  const redirect = (data) => {
+    if (data[title === 'Meals' ? 'meals' : 'drinks'].length === 1) {
+      navigate(title === 'Meals'
+        ? `/meals/${data.meals[0].idMeal}`
+        : `/drinks/${data.drinks[0].idDrink}`);
+    }
+  };
 
   async function handleClick() {
     if (radioBtn === 'ingredient') {
@@ -27,17 +38,20 @@ function SearchBar() {
         ? await filterByIngredient(input)
         : await filterDrinkByIngredient(input);
       setMealOrDrinksData(data);
+      redirect(data);
     } else if (radioBtn === 'name') {
       const data = title === 'Meals'
         ? await filterByName(input)
         : await filterDrinkByName(input);
       setMealOrDrinksData(data);
+      redirect(data);
     } else if (radioBtn === 'firstLetter') {
       if (input.length === 1) {
         const data = title === 'Meals'
           ? await filterByFirstLetter(input)
           : await filterDrinkByFirstLetter(input);
         setMealOrDrinksData(data);
+        redirect(data);
       } else if (input.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
