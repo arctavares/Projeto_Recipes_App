@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Provider from '../Provider';
 import {
@@ -20,9 +21,11 @@ const INGREDIENT_1 = 'Ingredient 1';
 describe('SearchBar component', () => {
   it('renders SearchBar correctly', () => {
     render(
-      <Provider value={ { currentTitle: 'Meals' } }>
-        <SearchBar />
-      </Provider>,
+      <BrowserRouter>
+        <Provider value={ { currentTitle: 'Meals' } }>
+          <SearchBar />
+        </Provider>
+      </BrowserRouter>,
     );
 
     expect(screen.getByTestId(SEARCH_INPUT)).toBeInTheDocument();
@@ -35,9 +38,11 @@ describe('SearchBar component', () => {
   it('handles ingredient search correctly', async () => {
     filterByIngredient.mockResolvedValueOnce([{ id: 1, name: INGREDIENT_1 }]);
     render(
-      <Provider value={ { currentTitle: 'Meals' } }>
-        <SearchBar />
-      </Provider>,
+      <BrowserRouter>
+        <Provider value={ { currentTitle: 'Meals' } }>
+          <SearchBar />
+        </Provider>
+      </BrowserRouter>,
     );
 
     fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
@@ -54,9 +59,11 @@ describe('SearchBar component', () => {
   it('handles name search correctly', async () => {
     filterByName.mockResolvedValueOnce([{ id: 1, name: 'Meal 1' }]);
     render(
-      <Provider value={ { currentTitle: 'Meals' } }>
-        <SearchBar />
-      </Provider>,
+      <BrowserRouter>
+        <Provider value={ { currentTitle: 'Meals' } }>
+          <SearchBar />
+        </Provider>
+      </BrowserRouter>,
     );
 
     fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
@@ -73,9 +80,11 @@ describe('SearchBar component', () => {
   it('handles first letter search correctly', async () => {
     filterByFirstLetter.mockResolvedValueOnce([{ id: 1, name: 'Meal 1' }]);
     render(
-      <Provider value={ { currentTitle: 'Meals' } }>
-        <SearchBar />
-      </Provider>,
+      <BrowserRouter>
+        <Provider value={ { currentTitle: 'Meals' } }>
+          <SearchBar />
+        </Provider>
+      </BrowserRouter>,
     );
 
     fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
@@ -93,9 +102,11 @@ describe('SearchBar component', () => {
     global.alert = jest.fn();
 
     render(
-      <Provider value={ { currentTitle: 'Meals' } }>
-        <SearchBar />
-      </Provider>,
+      <BrowserRouter>
+        <Provider value={ { currentTitle: 'Meals' } }>
+          <SearchBar />
+        </Provider>
+      </BrowserRouter>,
     );
 
     fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
