@@ -1,69 +1,113 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import SearchBar from '../components/SearchBar/SearchBar';
+import Provider from '../Provider';
 import {
+  filterByFirstLetter,
   filterByIngredient,
+  filterByName,
 } from '../service/MealsAPI';
 
-import RecipesContext from '../context';
-import SearchBar from '../components/SearchBar/SearchBar';
-
-const mockContextValue = {
-  currentTitle: 'Meals',
-};
+jest.mock('../service/MealsAPI');
+jest.mock('../service/DrinksAPI');
 
 const SEARCH_INPUT = 'search-input';
+const INGREDIENT_SEARCH_RADIO = 'ingredient-search-radio';
+const FIRST_LETTER_SEARCH_RADIO = 'first-letter-search-radio';
+const EXEC_SEARCH_BTN = 'exec-search-btn';
+const INGREDIENT_1 = 'Ingredient 1';
 
-jest.mock('../service/MealsAPI', () => ({
-  filterByFirstLetter: jest.fn(),
-  filterByIngredient: jest.fn(),
-  filterByName: jest.fn(),
-}));
-
-jest.mock('../service/DrinksAPI', () => ({
-  filterDrinkByFirstLetter: jest.fn(),
-  filterDrinkByIngredient: jest.fn(),
-  filterDrinkByName: jest.fn(),
-}));
-
-describe('Test SearchBar component', () => {
-  it('renders SearchBar component', () => {
-    const { getByTestId } = render(
-      <RecipesContext.Provider value={ mockContextValue }>
+describe('SearchBar component', () => {
+  it('renders SearchBar correctly', () => {
+    render(
+      <Provider value={ { currentTitle: 'Meals' } }>
         <SearchBar />
-      </RecipesContext.Provider>,
+      </Provider>,
     );
 
-    const searchInput = getByTestId(SEARCH_INPUT);
-    const ingredientRadio = getByTestId('ingredient-search-radio');
-    const nameRadio = getByTestId('name-search-radio');
-    const firstLetterRadio = getByTestId('first-letter-search-radio');
-    const searchButton = getByTestId('exec-search-btn');
-
-    expect(searchInput).toBeInTheDocument();
-    expect(ingredientRadio).toBeInTheDocument();
-    expect(nameRadio).toBeInTheDocument();
-    expect(firstLetterRadio).toBeInTheDocument();
-    expect(searchButton).toBeInTheDocument();
+    expect(screen.getByTestId(SEARCH_INPUT)).toBeInTheDocument();
+    expect(screen.getByTestId(INGREDIENT_SEARCH_RADIO)).toBeInTheDocument();
+    expect(screen.getByTestId('name-search-radio')).toBeInTheDocument();
+    expect(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO)).toBeInTheDocument();
+    expect(screen.getByTestId(EXEC_SEARCH_BTN)).toBeInTheDocument();
   });
-  it('handles search button click with ingredient radio selected', async () => {
-    const { getByTestId } = render(
-      <RecipesContext.Provider value={ mockContextValue }>
+
+  it('handles ingredient search correctly', async () => {
+    filterByIngredient.mockResolvedValueOnce([{ id: 1, name: INGREDIENT_1 }]);
+    render(
+      <Provider value={ { currentTitle: 'Meals' } }>
         <SearchBar />
-      </RecipesContext.Provider>,
+      </Provider>,
     );
 
-    const input = getByTestId(SEARCH_INPUT);
-    const ingredientRadio = getByTestId('ingredient-search-radio');
-    const searchButton = getByTestId('exec-search-btn');
-
-    userEvent.type(input, 'chicken');
-    userEvent.click(ingredientRadio);
-    userEvent.click(searchButton);
+    fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
+      target: { value: INGREDIENT_1 },
+    });
+    fireEvent.click(screen.getByTestId(INGREDIENT_SEARCH_RADIO));
+    fireEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
 
     await waitFor(() => {
-      expect(filterByIngredient).toHaveBeenCalledWith('chicken');
+      expect(filterByIngredient).toHaveBeenCalledWith(INGREDIENT_1);
+    });
+  });
+
+  it('handles name search correctly', async () => {
+    filterByName.mockResolvedValueOnce([{ id: 1, name: 'Meal 1' }]);
+    render(
+      <Provider value={ { currentTitle: 'Meals' } }>
+        <SearchBar />
+      </Provider>,
+    );
+
+    fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
+      target: { value: 'Meal 1' },
+    });
+    fireEvent.click(screen.getByTestId('name-search-radio'));
+    fireEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+
+    await waitFor(() => {
+      expect(filterByName).toHaveBeenCalledWith('Meal 1');
+    });
+  });
+
+  it('handles first letter search correctly', async () => {
+    filterByFirstLetter.mockResolvedValueOnce([{ id: 1, name: 'Meal 1' }]);
+    render(
+      <Provider value={ { currentTitle: 'Meals' } }>
+        <SearchBar />
+      </Provider>,
+    );
+
+    fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
+      target: { value: 'M' },
+    });
+    fireEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO));
+    fireEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+
+    await waitFor(() => {
+      expect(filterByFirstLetter).toHaveBeenCalledWith('M');
+    });
+  });
+
+  it('shows alert for invalid input length during first letter search', async () => {
+    global.alert = jest.fn();
+
+    render(
+      <Provider value={ { currentTitle: 'Meals' } }>
+        <SearchBar />
+      </Provider>,
+    );
+
+    fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
+      target: { value: 'Meal' },
+    });
+    fireEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO));
+    fireEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+
+    await waitFor(() => {
+      expect(global.alert).toHaveBeenCalledWith(
+        'Your search must have only 1 (one) character',
+      );
     });
   });
 });
