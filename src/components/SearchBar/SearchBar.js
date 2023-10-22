@@ -16,6 +16,7 @@ import RecipesContext from '../../context';
 function SearchBar() {
   const {
     currentTitle: title,
+    setData,
   } = useContext(RecipesContext);
 
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ function SearchBar() {
       }
     }
     console.log(mealOrDrinksData);
+    setData(mealOrDrinksData);
   }
 
   function renderRadioContainer() {

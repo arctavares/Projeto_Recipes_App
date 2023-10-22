@@ -1,7 +1,7 @@
 .HeaderContainer {
   display: flex;
   flex-direction: column;
-  height: 22vh;
+  height: 100%;
 }
 
 .nav {
@@ -69,7 +69,6 @@
 .drinkOrPlateIcon {
   width: 10vw;
 }
-
 
 @media ( min-width : 600px ) {
 

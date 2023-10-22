@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import Header from '../../components/Header/Header';
 import RecipesContext from '../../context';
+import Recipes from '../../components/Recipes';
 
 function MealsOrDrinks({ title }) {
   const {
@@ -11,7 +12,10 @@ function MealsOrDrinks({ title }) {
   setCurrentTitle(title);
 
   return (
-    <Header />
+    <>
+      <Header />
+      <Recipes />
+    </>
   );
 }
 

@@ -81,7 +81,6 @@ function Header({ showTopBtn = true }) {
           <SearchBar />
         )
       }
-
     </div>
   );
 }
