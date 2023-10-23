@@ -11,10 +11,11 @@ function Recipes() {
     <div className={ styles.recipesContainer }>
       {data
         && data
-          .splice(1, MAX_CARDS)
-          .map((card) => (
+          .splice(0, MAX_CARDS)
+          .map((card, index) => (
             <RecipeCard
               info={ card }
+              index={ index }
               key={ card[currentTitle === 'Meals' ? 'idMeal' : 'idDrink'] }
             />
           ))}
