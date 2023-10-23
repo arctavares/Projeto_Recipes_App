@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styles from './index.module.css';
 
@@ -58,8 +58,11 @@ function SearchBar() {
       }
     }
     console.log(mealOrDrinksData);
-    setData(mealOrDrinksData);
   }
+
+  useEffect(() => {
+    setData(mealOrDrinksData);
+  }, [mealOrDrinksData]);
 
   function renderRadioContainer() {
     return (
