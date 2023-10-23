@@ -4,7 +4,7 @@ import RecipesContext from '../context';
 
 export default function Provider({ children }) {
   const [currentTitle, setCurrentTitle] = useState('Meals');
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
 
   const contextValue = {
     currentTitle,

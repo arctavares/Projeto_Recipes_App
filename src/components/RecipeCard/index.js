@@ -1,18 +1,19 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import RecipesContext from '../../context';
 import styles from './index.module.css';
+import RecipesContext from '../../context';
 
-function RecipeCard({ info }) {
-  const { title } = useContext(RecipesContext);
+function RecipeCard({ info, title }) {
+  const { currentTitle } = useContext(RecipesContext);
+  console.log(title);
 
   return (
     <div className={ styles.cardContainer }>
       <div className={ styles.card }>
-        <h1>{title === 'Meals' ? info.strMeal : info.strDrink}</h1>
+        <h1>{currentTitle === 'Meals' ? info.strMeal : info.strDrink}</h1>
         <img
-          src={ title === 'Meals' ? info.strMealThumb : info.strDrinkThumb }
-          alt={ title === 'Meals' ? info.strMeal : info.strDrink }
+          src={ currentTitle === 'Meals' ? info.strMealThumb : info.strDrinkThumb }
+          alt={ currentTitle === 'Meals' ? info.strMeal : info.strDrink }
         />
       </div>
     </div>
@@ -28,4 +29,5 @@ RecipeCard.propTypes = {
     strMealThumb: PropTypes.string,
     strDrinkThumb: PropTypes.string,
   }).isRequired,
+  title: PropTypes.string.isRequired,
 };

@@ -26,14 +26,10 @@ function SearchBar() {
   const [input, setInput] = useState('');
 
   const redirect = (data) => {
-    if (data[title === 'Meals'
-      ? 'meals'
-      : 'drinks'] && data[title === 'Meals'
-      ? 'meals'
-      : 'drinks'].length === 1) {
+    if (data && data.length === 1) {
       navigate(title === 'Meals'
-        ? `/meals/${data.meals[0].idMeal}`
-        : `/drinks/${data.drinks[0].idDrink}`);
+        ? `/meals/${data[0].idMeal}`
+        : `/drinks/${data[0].idDrink}`);
     }
   };
 
