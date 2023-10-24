@@ -33,26 +33,38 @@ function SearchBar() {
     }
   };
 
+  const alert = (data) => {
+    if (data === null) {
+      global
+        .alert(
+          'Sorry, we haven\'t found any recipes for these filters.',
+        );
+    }
+  };
+
+  const callFunctions = (data) => {
+    setMealOrDrinksData(data);
+    alert(data);
+    redirect(data);
+  };
+
   async function handleClick() {
     if (radioBtn === 'ingredient') {
       const data = title === 'Meals'
         ? await filterByIngredient(input)
         : await filterDrinkByIngredient(input);
-      setMealOrDrinksData(data);
-      redirect(data);
+      callFunctions(data);
     } else if (radioBtn === 'name') {
       const data = title === 'Meals'
         ? await filterByName(input)
         : await filterDrinkByName(input);
-      setMealOrDrinksData(data);
-      redirect(data);
+      callFunctions(data);
     } else if (radioBtn === 'firstLetter') {
       if (input.length === 1) {
         const data = title === 'Meals'
           ? await filterByFirstLetter(input)
           : await filterDrinkByFirstLetter(input);
-        setMealOrDrinksData(data);
-        redirect(data);
+        callFunctions(data);
       } else if (input.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
