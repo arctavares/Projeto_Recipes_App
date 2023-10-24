@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import Header from '../../components/Header/Header';
 import RecipesContext from '../../context';
 import Recipes from '../../components/Recipes';
+import Footer from '../../components/Footer/Footer';
 
 function MealsOrDrinks({ title }) {
   const {
@@ -15,6 +16,7 @@ function MealsOrDrinks({ title }) {
     <>
       <Header />
       <Recipes />
+      <Footer />
     </>
   );
 }
