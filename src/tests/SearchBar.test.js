@@ -15,6 +15,7 @@ jest.mock('../service/DrinksAPI');
 const SEARCH_INPUT = 'search-input';
 const INGREDIENT_SEARCH_RADIO = 'ingredient-search-radio';
 const FIRST_LETTER_SEARCH_RADIO = 'first-letter-search-radio';
+// const NAME_SEARCH_RADIO = 'name-search-radio';
 const EXEC_SEARCH_BTN = 'exec-search-btn';
 const INGREDIENT_1 = 'Ingredient 1';
 
@@ -121,4 +122,27 @@ describe('SearchBar component', () => {
       );
     });
   });
+
+  // it.only('If found only one recipe, should redirect to recipe details', async () => {
+  //   filterByIngredient.mockResolvedValueOnce([{ idMeal: 52940, name: INGREDIENT_2 }]);
+
+  //   render(
+  //     <BrowserRouter>
+  //       <Provider value={{ currentTitle:'Meals' }}>
+  //         <SearchBar />
+  //       </Provider>
+  //     </BrowserRouter>
+  //   )
+
+  //   fireEvent.change(screen.getByTestId(SEARCH_INPUT), {
+  //     target: { value: INGREDIENT_2 }
+  //   });
+  //   fireEvent.click(screen.getByTestId(NAME_SEARCH_RADIO));
+  //   fireEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+
+  //   await waitFor(() => {
+  //     expect(window.location.pathname).toBe('/nova-rota');
+  //   })
+
+  // })
 });
