@@ -10,16 +10,18 @@ function RecipeCard({ info, index, title }) {
   return (
     <div className={ styles.cardContainer }>
       <div className={ styles.card } data-testid={ `${index}-recipe-card` }>
-        <h1
-          data-testid={ `${index}-card-name` }
-        >
-          {currentTitle === 'Meals' ? info.strMeal : info.strDrink}
-        </h1>
         <img
           src={ currentTitle === 'Meals' ? info.strMealThumb : info.strDrinkThumb }
           alt={ currentTitle === 'Meals' ? info.strMeal : info.strDrink }
           data-testid={ `${index}-card-img` }
         />
+        <div className={ styles.textContainer }>
+          <h1
+            data-testid={ `${index}-card-name` }
+          >
+            {currentTitle === 'Meals' ? info.strMeal : info.strDrink}
+          </h1>
+        </div>
       </div>
     </div>
   );
