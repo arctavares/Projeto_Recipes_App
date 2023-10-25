@@ -26,7 +26,7 @@ function DrinkCategories() {
       <button
         type="button"
         onClick={ handleClick }
-        data-testid="CockTail-category-filter"
+        data-testid="Cocktail-category-filter"
       >
         <img src={ cocktail } alt="Cocktail" />
       </button>
@@ -40,7 +40,7 @@ function DrinkCategories() {
       <button
         type="button"
         onClick={ handleClick }
-        data-testid="Other-category-filter"
+        data-testid="Other/Unknown-category-filter"
       >
         <img src={ other } alt="Other" />
       </button>
