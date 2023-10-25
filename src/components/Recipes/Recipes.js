@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../../context';
 import RecipeCard from '../RecipeCard';
 import styles from './index.module.css';
-import Categories from '../Categories';
+import DrinkCategories from '../DrinkCategories';
+import MealCategories from '../MealsCategories';
 
 function Recipes() {
   const {
@@ -30,7 +31,7 @@ function Recipes() {
 
   return (
     <>
-      <Categories />
+      {currentTitle === 'Meals' ? <MealCategories /> : <DrinkCategories />}
       <div className={ styles.recipesContainer }>
         {((data && data.length > 0) ? data : startWith)
           .splice(0, MAX_CARDS)
