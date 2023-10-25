@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import styles from './index.module.css';
 import RecipesContext from '../../context';
 
-function RecipeCard({ info, index, title }) {
+function RecipeCard({ info, index }) {
   const { currentTitle } = useContext(RecipesContext);
-  console.log(title);
 
   return (
     <div className={ styles.cardContainer }>
@@ -36,6 +35,5 @@ RecipeCard.propTypes = {
     strMealThumb: PropTypes.string,
     strDrinkThumb: PropTypes.string,
   }).isRequired,
-  title: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
 };
