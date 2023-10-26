@@ -13,3 +13,12 @@
   outline: inherit;
   padding: 0;
 }
+
+@media ( min-width : 1000px ) {
+
+  .categoryFilters img {
+    height: 100px;
+    min-width: 60px;
+    width: 90px;
+  }
+}
