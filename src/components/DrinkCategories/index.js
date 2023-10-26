@@ -10,7 +10,7 @@ import { filterDrinksByCategory } from '../../service/DrinksAPI';
 import RecipesContext from '../../context';
 
 function DrinkCategories() {
-  const { setData, startDrinksData } = useContext(RecipesContext);
+  const { setData, startDrinksData, data } = useContext(RecipesContext);
   const [category, setCategory] = useState('All');
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function DrinkCategories() {
     } else if (category === 'All') {
       fetchAll();
     }
-  }, [category]);
+  }, [category, data]);
 
   return (
     <div className={ styles.categoryFilters }>
@@ -62,7 +62,7 @@ function DrinkCategories() {
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Other / Unknown') }
+        onClick={ () => setCategory('Other/Unknown') }
         data-testid="Other/Unknown-category-filter"
       >
         <img src={ other } alt="Other" />

@@ -61,7 +61,7 @@ function MealCategories() {
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('BreakFast') }
+        onClick={ () => setCategory('Breakfast') }
         data-testid="Breakfast-category-filter"
       >
         <img src={ breakFast } alt="BreakFast" />
