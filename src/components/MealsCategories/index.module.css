@@ -1,16 +1,15 @@
 .categoryFilters {
-    align-items: flex-start;
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .categoryFilters button {
-    background: none;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    font: inherit;
-    outline: inherit;
-    padding: 0;
-  }
-  
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-around;
+}
+
+.categoryFilters button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  outline: inherit;
+  padding: 0;
+}

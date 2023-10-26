@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import RecipesContext from '../../context';
 import RecipeCard from '../RecipeCard';
 import styles from './index.module.css';
@@ -11,9 +11,9 @@ function Recipes() {
     currentTitle,
     startMealsData,
     startDrinksData,
+    setData,
   } = useContext(RecipesContext);
   const MAX_CARDS = 12;
-  const [startWith, setStartWith] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,25 +23,30 @@ function Recipes() {
       } else {
         newData = await startDrinksData();
       }
-      setStartWith(newData);
+      setData(newData);
     }
 
-    fetchData();
-  }, [startWith]);
+    if (
+      data.length === 0
+    ) {
+      fetchData();
+    }
+  }, [data]);
 
   return (
     <>
       {currentTitle === 'Meals' ? <MealCategories /> : <DrinkCategories />}
       <div className={ styles.recipesContainer }>
-        {((data && data.length > 0) ? data : startWith)
-          .splice(0, MAX_CARDS)
-          .map((card, index) => (
-            <RecipeCard
-              info={ card }
-              index={ index }
-              key={ card[currentTitle === 'Meals' ? 'idMeal' : 'idDrink'] }
-            />
-          ))}
+        {
+          (data.length !== 0 && data[0] !== undefined)
+  && data.slice(0, MAX_CARDS).map((card, index) => (
+    <RecipeCard
+      info={ card }
+      index={ index }
+      key={ card[currentTitle === 'Meals' ? 'idMeal' : 'idDrink'] }
+    />
+  ))
+        }
       </div>
     </>
   );

@@ -18,3 +18,10 @@ export async function filterByFirstLetter(firstLetter) {
   const data = await response.json();
   return data.meals;
 }
+
+export async function filterByCategory(category) {
+  const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(URL);
+  const data = await response.json();
+  return data.meals;
+}

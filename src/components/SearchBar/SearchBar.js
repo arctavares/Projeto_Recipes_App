@@ -50,7 +50,7 @@ function SearchBar() {
 
   async function handleClick() {
     if (radioBtn === 'ingredient') {
-      const data = title === 'Meals'
+      const data = (title === 'Meals')
         ? await filterByIngredient(input)
         : await filterDrinkByIngredient(input);
       callFunctions(data);
