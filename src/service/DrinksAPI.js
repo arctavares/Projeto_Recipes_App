@@ -18,3 +18,10 @@ export async function filterDrinkByFirstLetter(firstLetter) {
   const data = await response.json();
   return data.drinks;
 }
+
+export async function filterDrinksByCategory(category) {
+  const URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(URL);
+  const data = await response.json();
+  return data.drinks;
+}

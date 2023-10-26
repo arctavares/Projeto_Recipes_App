@@ -33,19 +33,23 @@ function Recipes() {
     }
   }, [data]);
 
+  useEffect(() => {
+    setData(data);
+  }, [data]);
+
   return (
     <>
       {currentTitle === 'Meals' ? <MealCategories /> : <DrinkCategories />}
       <div className={ styles.recipesContainer }>
         {
           (data.length !== 0 && data[0] !== undefined)
-  && data.slice(0, MAX_CARDS).map((card, index) => (
-    <RecipeCard
-      info={ card }
-      index={ index }
-      key={ card[currentTitle === 'Meals' ? 'idMeal' : 'idDrink'] }
-    />
-  ))
+          && data.slice(0, MAX_CARDS).map((card, index) => (
+            <RecipeCard
+              info={ card }
+              index={ index }
+              key={ card[currentTitle === 'Meals' ? 'idMeal' : 'idDrink'] }
+            />
+          ))
         }
       </div>
     </>
