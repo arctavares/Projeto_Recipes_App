@@ -40,35 +40,35 @@ function MealCategories() {
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Beef') }
+        onClick={ () => setCategory(category === 'Beef' ? 'All' : 'Beef') }
         data-testid="Beef-category-filter"
       >
         <img src={ beef } alt="Beef" />
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Goat') }
+        onClick={ () => setCategory(category === 'Goat' ? 'All' : 'Goat') }
         data-testid="Goat-category-filter"
       >
         <img src={ goat } alt="Goat" />
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Chicken') }
+        onClick={ () => setCategory(category === 'Chicken' ? 'All' : 'Chicken') }
         data-testid="Chicken-category-filter"
       >
         <img src={ chicken } alt="Chicken" />
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Breakfast') }
+        onClick={ () => setCategory(category === 'Breakfast' ? 'All' : 'Breakfast') }
         data-testid="Breakfast-category-filter"
       >
         <img src={ breakFast } alt="BreakFast" />
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Dessert') }
+        onClick={ () => setCategory(category === 'Dessert' ? 'All' : 'Dessert') }
         data-testid="Dessert-category-filter"
       >
         <img src={ Dessert } alt="Dessert" />

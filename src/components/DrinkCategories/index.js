@@ -10,7 +10,7 @@ import { filterDrinksByCategory } from '../../service/DrinksAPI';
 import RecipesContext from '../../context';
 
 function DrinkCategories() {
-  const { setData, startDrinksData, data } = useContext(RecipesContext);
+  const { setData, startDrinksData } = useContext(RecipesContext);
   const [category, setCategory] = useState('All');
 
   useEffect(() => {
@@ -27,7 +27,15 @@ function DrinkCategories() {
     } else if (category === 'All') {
       fetchAll();
     }
-  }, [category, data]);
+  }, [category]);
+
+  useEffect(() => {
+    async function fetchAll() {
+      const response = await startDrinksData();
+      setData(response);
+    }
+    fetchAll();
+  }, []);
 
   return (
     <div className={ styles.categoryFilters }>
@@ -40,7 +48,9 @@ function DrinkCategories() {
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Ordinary Drink') }
+        onClick={ () => setCategory(
+          category === 'Ordinary Drink' ? 'All' : 'Ordinary Drink',
+        ) }
         data-testid="Ordinary Drink-category-filter"
 
       >
@@ -48,28 +58,30 @@ function DrinkCategories() {
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Cocktail') }
+        onClick={ () => setCategory(category === 'Cocktail' ? 'All' : 'Cocktail') }
         data-testid="Cocktail-category-filter"
       >
         <img src={ cocktail } alt="Cocktail" />
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Shake') }
+        onClick={ () => setCategory(category === 'Shake' ? 'All' : 'Shake') }
         data-testid="Shake-category-filter"
       >
         <img src={ shake } alt="Shake" />
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Other/Unknown') }
+        onClick={ () => setCategory(
+          category === 'Other / Unknown' ? 'All' : 'Other / Unknown',
+        ) }
         data-testid="Other/Unknown-category-filter"
       >
         <img src={ other } alt="Other" />
       </button>
       <button
         type="button"
-        onClick={ () => setCategory('Cocoa') }
+        onClick={ () => setCategory(category === 'Cocoa' ? 'All' : 'Cocoa') }
         data-testid="Cocoa-category-filter"
       >
         <img src={ cocoa } alt="Cocoa" />
