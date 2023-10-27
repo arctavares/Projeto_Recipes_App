@@ -25,3 +25,10 @@ export async function filterDrinksByCategory(category) {
   const data = await response.json();
   return data.drinks;
 }
+
+export async function getDrinkById(id) {
+  const URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const response = await fetch(URL);
+  const data = await response.json();
+  return data.drinks[0];
+}
