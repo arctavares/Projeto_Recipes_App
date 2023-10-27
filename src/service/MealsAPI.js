@@ -26,9 +26,9 @@ export async function filterByCategory(category) {
   return data.meals;
 }
 
-export async function getMealById(id){
+export async function getMealById(id) {
   const URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
   const response = await fetch(URL);
-  const data = await  response.json();
+  const data = await response.json();
   return data.meals[0];
 }

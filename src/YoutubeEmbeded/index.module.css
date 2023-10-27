@@ -1,0 +1,10 @@
+.videoContainer {
+  margin: 10px 20px 20px;
+  width: 375px;
+}
+
+iframe {
+  height: 205.09px;
+  padding: 10px;
+  width: 90%;
+}
