@@ -9,8 +9,15 @@
   font-weight: 900;
   left: 50%;
   position: absolute;
-  top: 15%;
+  top: 83px;
   transform: translate(-50%, -50%);
+}
+
+.centered h1 {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5.5px;
+  text-align: center;
+  width: 375px;
 }
 
 .ingredientsContainer h1 {
@@ -37,4 +44,9 @@
 
 .videoContainer {
   width: 375px;
+}
+
+.category {
+  margin-top: 15px;
+  text-align: center;
 }

@@ -41,39 +41,75 @@ function RecipeDetail() {
     }
   }
 
+  function filterIngredients() {
+    const filteredIngredients = Object.keys(info).filter((ingredient) => {
+      if (ingredient
+        .includes('Ingredient')
+          && (info[ingredient] !== ''
+          && info[ingredient] !== null)) {
+        return ingredient;
+      }
+      return null;
+    });
+    return filteredIngredients;
+  }
+
   return (
     <div className={ styles.recipeDetailContainer }>
       <div className={ styles.imgContainer }>
         <img
           src={ url.includes('drinks') ? info.strDrinkThumb : info.strMealThumb }
           alt={ url.includes('drinks') ? info.strDrinkThumb : info.strMealThumb }
+          data-testid="recipe-photo"
         />
         <div
           className={ styles.centered }
         >
-          {url.includes('drinks') ? info.strDrink : info.strMeal}
+          <h1
+            data-testid="recipe-title"
+          >
+            {
+              url.includes('drinks')
+                ? info.strDrink
+                : info.strMeal
+            }
+          </h1>
         </div>
+      </div>
+      <div className={ styles.category }>
+        <h2
+          data-testid="recipe-category"
+        >
+          {
+            url.includes('drinks')
+              ? info.strAlcoholic
+              : info.strCategory
+          }
+        </h2>
       </div>
       <div className={ styles.ingredientsContainer }>
         <h1>Ingredients</h1>
         <div className={ styles.ingredientsList }>
           {
-            Object.keys(info).map((ingredient) => {
-              if (ingredient
-                .includes('Ingredient')
-                && (info[ingredient] !== ''
-                && info[ingredient] !== null)) {
-                return <li key={ ingredient }>{info[ingredient]}</li>;
-              }
-              return null;
-            })
+            filterIngredients()
+              .map((ingredient, index) => (
+                <li
+                  key={ ingredient }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {info[ingredient]}
+                  {' '}
+                  -
+                  {' '}
+                  {info[`strMeasure${index + 1}`]}
+                </li>))
           }
         </div>
       </div>
       <div className={ styles.instructionsContainer }>
         <h1>Instructions</h1>
         <div className={ styles.instructionsText }>
-          <p>{info.strInstructions}</p>
+          <p data-testid="instructions">{info.strInstructions}</p>
         </div>
       </div>
       {
