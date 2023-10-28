@@ -53,7 +53,8 @@
   margin-top: 15px;
   position: absolute;
   text-align: center;
-  top: 8px;
+  top: 0;
+  width: 10vw;
 }
 
 @media ( min-width : 1000px ) {
@@ -63,10 +64,17 @@
   }
 }
 
+@media ( max-width : 1000px ) {
+
+  .category {
+    width: 25%;
+  }
+}
+
 .category h2 {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 2em;
   font-weight: 700;
 }
 

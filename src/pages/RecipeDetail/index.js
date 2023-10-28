@@ -77,6 +77,7 @@ function RecipeDetail() {
                 {info[ingredient]}
                 {' '}
                 -
+                {' '}
                 {info[`strMeasure${index + 1}`]}
               </li>
             ))}
