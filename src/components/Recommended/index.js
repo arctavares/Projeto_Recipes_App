@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styles from './index.module.css';
 
-function Recommended({ data, recommendedMaxIndex, url, setRecommendedMaxIndex }) {
+function Recommended({ data, recommendedMaxIndex, url }) {
   const [six, setSix] = useState([]);
 
   function getRandomSixNumbers(n) {
@@ -22,26 +23,35 @@ function Recommended({ data, recommendedMaxIndex, url, setRecommendedMaxIndex })
   }
 
   useEffect(() => {
-    if (six.length !== 6) {
+    const EXACT_NUMBER_OF_SIX = 6;
+    if (six.length !== EXACT_NUMBER_OF_SIX) {
       const dataLength = data.length;
       const SixSelected = getRandomSixNumbers(dataLength);
       setSix(SixSelected);
     }
   }, [data, six]);
 
-  if (recommendedMaxIndex > 6) {
-    recommendedMaxIndex = 2;
-  }
   const slicedItems = six.slice(recommendedMaxIndex - 2, recommendedMaxIndex);
 
   return (
     <div className={ styles.recommendedContainer }>
       {slicedItems.map((recipeIndex, index) => (
-        <div className={ styles.recommendItem } data-testid={ `${index}-recommendation-card` } key={ index }>
-          <img src={ url.includes('meals') ? data[recipeIndex].strDrinkThumb : data[recipeIndex].strMealThumb } alt={ data[recipeIndex].strInstructions } />
+        <div
+          className={ styles.recommendItem }
+          data-testid={ `${index}-recommendation-card` }
+          key={ index }
+        >
+          <img
+            src={ url.includes('meals')
+              ? data[recipeIndex].strDrinkThumb
+              : data[recipeIndex].strMealThumb }
+            alt={ data[recipeIndex].strInstructions }
+          />
           <div>
             <h2 data-testid={ `${recipeIndex}-recommendation-title` }>
-              {url.includes('meals') ? data[recipeIndex].strDrink : data[recipeIndex].strMeal}
+              {url.includes('meals')
+                ? data[recipeIndex].strDrink
+                : data[recipeIndex].strMeal}
             </h2>
           </div>
         </div>
@@ -51,3 +61,17 @@ function Recommended({ data, recommendedMaxIndex, url, setRecommendedMaxIndex })
 }
 
 export default Recommended;
+
+Recommended.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      strDrinkThumb: PropTypes.string,
+      strMealThumb: PropTypes.string,
+      strDrink: PropTypes.string,
+      strMeal: PropTypes.string,
+      strInstructions: PropTypes.string,
+    }),
+  ).isRequired,
+  recommendedMaxIndex: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
+};

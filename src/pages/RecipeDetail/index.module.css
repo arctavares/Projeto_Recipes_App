@@ -47,58 +47,55 @@
 }
 
 .category {
-  margin-top: 15px;
-  text-align: center;
+  color: #fcc436;
   left: 50%;
+  margin-top: 15px;
   position: absolute;
+  text-align: center;
   top: 83px;
   transform: translate(-270%, -300%);
-  color: #FCC436;
 }
 
 .category h2 {
-    font-weight: 700;
-    font-size: 15px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 
-
-
-
 .startRecipesContainer {
-    border: 1px solid black;
-    background-color: #FCC436;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    margin: 20px;
-    width: 336px;
-    border-radius: 5px;
+  align-items: center;
+  background-color: #fcc436;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  margin: 20px;
+  width: 336px;
 
 }
 
 .startRecipesContainer h1 {
-    font-size: 14px;
-    margin-top: 5px;
-    font-weight: 700;
-    line-height: 14.35px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14.35px;
+  margin-top: 5px;
 }
 
 .nextButtonContainer {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .nextButton {
-  width: 200px;
+  background-color: #fcc436;
   border: 0.55px solid black;
-  background-color: #FCC436;
   border-radius: 5%;
   color: white;
   font-weight: 700;
+  width: 200px;
 }

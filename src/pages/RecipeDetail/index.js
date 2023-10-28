@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { getMealById } from '../../service/MealsAPI';
 import { filterDrinkByName, getDrinkById } from '../../service/DrinksAPI';
@@ -10,42 +10,25 @@ function RecipeDetail() {
   const [info, setInfo] = useState({});
   const [data, setData] = useState([]);
   const [numberOfRecommendedClicks, setNumberOfRecommendedClicks] = useState(1);
-  const recommendedMaxIndex = 2 * numberOfRecommendedClicks;
 
   const param = useParams();
   const location = useLocation();
   const url = location.pathname;
 
   useEffect(() => {
-    async function fetchMealData() {
-      const newData = await getMealById(param.id);
+    async function fetchData() {
+      let newData;
+      if (url.includes('meals')) {
+        newData = await getMealById(param.id);
+      } else if (url.includes('drinks')) {
+        newData = await getDrinkById(param.id);
+      }
       setInfo(newData);
-    }
-
-    async function fetchDrinkData() {
-      const newData = await getDrinkById(param.id);
-      setInfo(newData);
-    }
-
-    if (url.includes('meals')) {
-      fetchMealData();
-    } else if (url.includes('drinks')) {
-      fetchDrinkData();
-    }
-
-    async function fetchAllDrinks() {
       const drinksData = await filterDrinkByName('');
       setData(drinksData);
     }
-
-    if (url.includes('meals')) {
-      fetchAllDrinks();
-    }
-  }, []);
-
-  useEffect(() => {
-
-  }, []);
+    fetchData();
+  }, [param.id, url]);
 
   function showYoutubeVideo() {
     if (url.includes('meals') && info.strYoutube !== '' && info.strYoutube) {
@@ -56,22 +39,10 @@ function RecipeDetail() {
         </div>
       );
     }
+    return null;
   }
 
-  function filterIngredients() {
-    const filteredIngredients = Object.keys(info).filter((ingredient) => {
-      if (ingredient
-        .includes('Ingredient')
-                    && (info[ingredient] !== ''
-                    && info[ingredient] !== null)) {
-        return ingredient;
-      }
-      return null;
-    });
-    return filteredIngredients;
-  }
-
-  console.log(numberOfRecommendedClicks);
+  const MAX_NUMBER_OF_CLICKS = 3;
   return (
     <div className={ styles.recipeDetailContainer }>
       <div className={ styles.imgContainer }>
@@ -80,48 +51,35 @@ function RecipeDetail() {
           alt={ url.includes('drinks') ? info.strDrinkThumb : info.strMealThumb }
           data-testid="recipe-photo"
         />
-        <div
-          className={ styles.centered }
-        >
-          <h1
-            data-testid="recipe-title"
-          >
-            {
-              url.includes('drinks')
-                ? info.strDrink
-                : info.strMeal
-            }
+        <div className={ styles.centered }>
+          <h1 data-testid="recipe-title">
+            {url.includes('drinks') ? info.strDrink : info.strMeal}
           </h1>
         </div>
       </div>
       <div className={ styles.category }>
-        <h2
-          data-testid="recipe-category"
-        >
-          {
-            url.includes('drinks')
-              ? info.strAlcoholic
-              : info.strCategory
-          }
+        <h2 data-testid="recipe-category">
+          {url.includes('drinks') ? info.strAlcoholic : info.strCategory}
         </h2>
       </div>
       <div className={ styles.ingredientsContainer }>
         <h1>Ingredients</h1>
         <div className={ styles.ingredientsList }>
-          {
-            filterIngredients()
-              .map((ingredient, index) => (
-                <li
-                  key={ ingredient }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {info[ingredient]}
-                  {' '}
-                  -
-                  {' '}
-                  {info[`strMeasure${index + 1}`]}
-                </li>))
-          }
+          {Object.keys(info)
+            .filter((ingredient) => ingredient.includes('Ingredient')
+            && info[ingredient] !== ''
+             && info[ingredient] !== null)
+            .map((ingredient, index) => (
+              <li
+                key={ ingredient }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+              >
+                {info[ingredient]}
+                {' '}
+                -
+                {info[`strMeasure${index + 1}`]}
+              </li>
+            ))}
         </div>
       </div>
       <div className={ styles.instructionsContainer }>
@@ -130,18 +88,24 @@ function RecipeDetail() {
           <p data-testid="instructions">{info.strInstructions}</p>
         </div>
       </div>
-      {
-        showYoutubeVideo()
-      }
+      {showYoutubeVideo()}
 
       <div>
         <h1 className={ styles.recommendedTitle }>Recommended</h1>
-        {data.length !== 0 && <Recommended data={ data } recommendedMaxIndex={ recommendedMaxIndex } url={ url } />}
+        {data.length !== 0
+        && <Recommended
+          data={ data }
+          recommendedMaxIndex={ numberOfRecommendedClicks * 2 }
+          url={ url }
+        />}
         <div className={ styles.nextButtonContainer }>
           <button
             type="button"
             className={ styles.nextButton }
-            onClick={ () => setNumberOfRecommendedClicks((prevClicks) => (prevClicks === 4 ? 1 : prevClicks + 1)) }
+            onClick={ () => setNumberOfRecommendedClicks((prevClicks) => (
+              prevClicks === MAX_NUMBER_OF_CLICKS
+                ? 1
+                : prevClicks + 1)) }
           >
             Next
           </button>
@@ -151,7 +115,6 @@ function RecipeDetail() {
       <div className={ styles.startRecipesContainer }>
         <h1>START RECIPE</h1>
       </div>
-
     </div>
   );
 }

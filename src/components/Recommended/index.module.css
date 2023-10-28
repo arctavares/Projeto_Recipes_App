@@ -1,26 +1,26 @@
-.recommendItem{
-    width: 45%;
-    border: 0.52px solid #b1b1b1;
-    border-radius: 5px;
+.recommendItem {
+  border: 0.52px solid #b1b1b1;
+  border-radius: 5px;
+  width: 45%;
 }
 
 .recommendItem img {
-    width: 100%;
-    border-radius: 5px 5px 0px 0px;
+  border-radius: 5px 5px 0 0;
+  width: 100%;
 }
 
-.recommendedContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 375px;
-    padding:20px
+.recommendedContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20px;
+  width: 375px;
 }
 
 .recommendedContainer h1 {
-    margin-left: 25px
+  margin-left: 25px;
 }
 
 .recommendedTitle {
-    margin-left: 25px;
+  margin-left: 25px;
 }
