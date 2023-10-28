@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { getMealById } from '../../service/MealsAPI';
-import { getDrinkById } from '../../service/DrinksAPI';
+import { filterDrinkByName, getDrinkById } from '../../service/DrinksAPI';
 import YouTubeEmbed from '../../YoutubeEmbeded';
 import styles from './index.module.css';
+import Recommended from '../../components/Recommended';
 
 function RecipeDetail() {
   const [info, setInfo] = useState({});
+  const [data, setData] = useState([]);
+  const [numberOfRecommendedClicks, setNumberOfRecommendedClicks] = useState(1);
+  const recommendedMaxIndex = 2 * numberOfRecommendedClicks;
 
   const param = useParams();
   const location = useLocation();
@@ -14,13 +18,13 @@ function RecipeDetail() {
 
   useEffect(() => {
     async function fetchMealData() {
-      const data = await getMealById(param.id);
-      setInfo(data);
+      const newData = await getMealById(param.id);
+      setInfo(newData);
     }
 
     async function fetchDrinkData() {
-      const data = await getDrinkById(param.id);
-      setInfo(data);
+      const newData = await getDrinkById(param.id);
+      setInfo(newData);
     }
 
     if (url.includes('meals')) {
@@ -28,6 +32,19 @@ function RecipeDetail() {
     } else if (url.includes('drinks')) {
       fetchDrinkData();
     }
+
+    async function fetchAllDrinks() {
+      const drinksData = await filterDrinkByName('');
+      setData(drinksData);
+    }
+
+    if (url.includes('meals')) {
+      fetchAllDrinks();
+    }
+  }, []);
+
+  useEffect(() => {
+
   }, []);
 
   function showYoutubeVideo() {
@@ -45,8 +62,8 @@ function RecipeDetail() {
     const filteredIngredients = Object.keys(info).filter((ingredient) => {
       if (ingredient
         .includes('Ingredient')
-          && (info[ingredient] !== ''
-          && info[ingredient] !== null)) {
+                    && (info[ingredient] !== ''
+                    && info[ingredient] !== null)) {
         return ingredient;
       }
       return null;
@@ -54,6 +71,7 @@ function RecipeDetail() {
     return filteredIngredients;
   }
 
+  console.log(numberOfRecommendedClicks);
   return (
     <div className={ styles.recipeDetailContainer }>
       <div className={ styles.imgContainer }>
@@ -115,6 +133,24 @@ function RecipeDetail() {
       {
         showYoutubeVideo()
       }
+
+      <div>
+        <h1 className={ styles.recommendedTitle }>Recommended</h1>
+        {data.length !== 0 && <Recommended data={ data } recommendedMaxIndex={ recommendedMaxIndex } url={ url } />}
+        <div className={ styles.nextButtonContainer }>
+          <button
+            type="button"
+            className={ styles.nextButton }
+            onClick={ () => setNumberOfRecommendedClicks((prevClicks) => (prevClicks === 4 ? 1 : prevClicks + 1)) }
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div className={ styles.startRecipesContainer }>
+        <h1>START RECIPE</h1>
+      </div>
 
     </div>
   );
