@@ -4,8 +4,8 @@ import styles from './index.module.css';
 
 export default function YouTubeEmbed({ videoID }) {
   return (
-    <div className={styles.mainDiv}>
-    <div className={ styles.videoContainer }>
+    <div className={ styles.mainDiv }>
+      <div className={ styles.videoContainer }>
         <h1>Video</h1>
         <iframe
           data-testid="video"

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './App.module.css';
 import { Routes, Route } from 'react-router-dom';
+import styles from './App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import MealsOrDrinks from './pages/MealsOrDrinks';
@@ -13,8 +13,8 @@ import RecipeDetail from './pages/RecipeDetail';
 function App() {
   return (
     <Provider>
-      <div className={styles.mainDiv}>
-        <div className={styles.contentContainer}>
+      <div className={ styles.mainDiv }>
+        <div className={ styles.contentContainer }>
           <Routes>
             <Route path="/" element={ <Login /> } />
             <Route path="/meals" element={ <MealsOrDrinks title="Meals" /> } />

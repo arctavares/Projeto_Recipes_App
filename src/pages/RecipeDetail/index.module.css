@@ -49,11 +49,18 @@
 .category {
   color: #fcc436;
   left: 50%;
+  left: 16px;
   margin-top: 15px;
   position: absolute;
   text-align: center;
-  top: 83px;
-  transform: translate(-270%, -300%);
+  top: 8px;
+}
+
+@media ( min-width : 1000px ) {
+
+  .category {
+    left: 28vw;
+  }
 }
 
 .category h2 {
@@ -63,6 +70,10 @@
   font-weight: 700;
 }
 
+.startContainer {
+  display: flex;
+  justify-content: center;
+}
 
 .startRecipesContainer {
   align-items: center;
@@ -74,7 +85,7 @@
   height: 40px;
   justify-content: center;
   margin: 20px;
-  width: 336px;
+  width: 90vw;
 
 }
 

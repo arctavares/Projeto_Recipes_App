@@ -111,11 +111,13 @@ function RecipeDetail() {
           </button>
         </div>
       </div>
-
-      <div 
-        className={ styles.startRecipesContainer } 
-        data-testid="start-recipe-btn">
-        <h1>START RECIPE</h1>
+      <div className={ styles.startContainer }>
+        <div
+          className={ styles.startRecipesContainer }
+          data-testid="start-recipe-btn"
+        >
+          <h1>START RECIPE</h1>
+        </div>
       </div>
     </div>
   );
