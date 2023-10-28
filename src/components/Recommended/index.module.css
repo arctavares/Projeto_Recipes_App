@@ -14,7 +14,7 @@
   flex-direction: row;
   justify-content: space-around;
   padding: 20px;
-  width: 375px;
+  width: 50vw;
 }
 
 .recommendedContainer h1 {
@@ -23,4 +23,18 @@
 
 .recommendedTitle {
   margin-left: 25px;
+}
+
+@media ( max-width : 600px ) {
+
+  .recommendedContainer {
+    width: 100vw;
+  }
+}
+
+@media ( max-width : 1000px ) {
+
+  .recommendedContainer {
+    width: 100vw;
+  }
 }
