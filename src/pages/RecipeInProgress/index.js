@@ -4,34 +4,17 @@ import { getMealById } from '../../service/MealsAPI';
 import { filterDrinkByName, getDrinkById } from '../../service/DrinksAPI';
 import YouTubeEmbed from '../../YoutubeEmbeded';
 import styles from './index.module.css';
-import Recommended from '../../components/Recommended';
 
-function RecipeDetail() {
+function RecipeInProgress() {
   const [info, setInfo] = useState({});
   const [data, setData] = useState([]);
-  const [numberOfRecommendedClicks, setNumberOfRecommendedClicks] = useState(1);
-  const [doneRecipe, setDoneRecipe] = useState(false);
+  const [allChecked, setAllChecked] = useState(false);
+  const [checked, setChecked] = useState([]);
+  const [checkBoxSize, setCheckBoxSize] = useState(0);
 
   const param = useParams();
   const location = useLocation();
   const url = location.pathname;
-
-  useEffect(() => {
-    const object = {
-      doneRecipes: [] };
-    localStorage.setItem('doneRecipes', JSON.stringify(object));
-
-    const doneRecipesResponse = localStorage.getItem('doneRecipes');
-    const getRecipesDone = JSON.parse(doneRecipesResponse);
-    console.log(typeof (getRecipesDone));
-
-    getRecipesDone.doneRecipes.forEach((recipe) => {
-      console.log(recipe.strMeal, info.strMeal, recipe.strMeal === info.strMeal);
-      if (recipe.strMeal === info.strMeal) {
-        setDoneRecipe(true);
-      }
-    });
-  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -60,7 +43,29 @@ function RecipeDetail() {
     return null;
   }
 
-  const MAX_NUMBER_OF_CLICKS = 3;
+  useEffect(() => {
+    const Size = Object.keys(info)
+      .filter((ingredient) => ingredient.includes('Ingredient')
+        && info[ingredient] !== ''
+        && info[ingredient] !== null);
+    setCheckBoxSize(Size);
+  }, []);
+
+  function handleCheckboxClick(e) {
+    const checkboxName = e.target.name;
+
+    let check;
+    if (!checked.includes(checkboxName)) {
+      setChecked((prevState) => [...prevState, checkboxName]);
+      check = [...checked, checkboxName];
+      if (checkBoxSize.length === check.length) {
+        setAllChecked(true);
+      } else {
+        setAllChecked(false);
+      }
+    }
+  }
+
   return (
     <div className={ styles.recipeDetailContainer }>
       <div className={ styles.imgContainer }>
@@ -84,20 +89,24 @@ function RecipeDetail() {
         <h1>Ingredients</h1>
         <div className={ styles.ingredientsList }>
           {Object.keys(info)
-            .filter((ingredient) => ingredient.includes('Ingredient')
-            && info[ingredient] !== ''
-             && info[ingredient] !== null)
+            .filter((ingredient) => ingredient.includes('Ingredient') && info[ingredient] !== '' && info[ingredient] !== null)
             .map((ingredient, index) => (
-              <li
-                key={ ingredient }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {info[ingredient]}
-                {' '}
-                -
-                {' '}
-                {info[`strMeasure${index + 1}`]}
-              </li>
+              <div className={ `${styles.checkBoxItem} form-check` } key={ ingredient }>
+                <input
+                  type="checkbox"
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                  id={ `ingredient/${index}` }
+                  name={ `ingredient/${index}` }
+                  className="form-check-input"
+                  onClick={ (e) => handleCheckboxClick(e) }
+                />
+                <label htmlFor={ `ingredient/${index}` } className="form-check-label">
+                  {info[ingredient]}
+                  {' '}
+                  -
+                  {info[`strMeasure${index + 1}`]}
+                </label>
+              </div>
             ))}
         </div>
       </div>
@@ -108,30 +117,8 @@ function RecipeDetail() {
         </div>
       </div>
       {showYoutubeVideo()}
-
-      <div>
-        <h1 className={ styles.recommendedTitle }>Recommended</h1>
-        {data.length !== 0
-        && <Recommended
-          data={ data }
-          recommendedMaxIndex={ numberOfRecommendedClicks * 2 }
-          url={ url }
-        />}
-        <div className={ styles.nextButtonContainer }>
-          <button
-            type="button"
-            className={ styles.nextButton }
-            onClick={ () => setNumberOfRecommendedClicks((prevClicks) => (
-              prevClicks === MAX_NUMBER_OF_CLICKS
-                ? 1
-                : prevClicks + 1)) }
-          >
-            Next
-          </button>
-        </div>
-      </div>
       {
-        !doneRecipe && (
+        allChecked && (
           <Link
             to={ url.includes('meals')
               ? `/meals/${param.id}/in-progress`
@@ -143,7 +130,7 @@ function RecipeDetail() {
                 className={ styles.startRecipesContainer }
                 data-testid="start-recipe-btn"
               >
-                <h1>START RECIPE</h1>
+                <h1>FINISH RECIPE</h1>
               </div>
             </div>
           </Link>
@@ -154,4 +141,4 @@ function RecipeDetail() {
   );
 }
 
-export default RecipeDetail;
+export default RecipeInProgress;

@@ -1,0 +1,133 @@
+.imgContainer img {
+    height: 25vh;
+    width: 100%;
+  }
+  
+  .centered {
+    color: white;
+    font-size: 2em;
+    font-weight: 900;
+    left: 50%;
+    position: absolute;
+    top: 83px;
+    transform: translate(-50%, -50%);
+  }
+  
+  .centered h1 {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5.5px;
+    text-align: center;
+    width: 375px;
+  }
+  
+  .ingredientsContainer h1 {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  
+  .ingredientsList {
+    border: 0.55px solid #b1b1b1;
+    border-radius: 5.35px;
+    margin: 10px 20px 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .instructionsContainer {
+    margin: 10px 20px 20px;
+  }
+  
+  .instructionsText {
+    border: 0.55px solid #b1b1b1;
+    border-radius: 5.35px;
+    padding: 10px;
+  }
+  
+  .videoContainer {
+    width: 375px;
+  }
+  
+  .category {
+    color: #fcc436;
+    left: 50%;
+    left: 16px;
+    margin-top: 15px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 10vw;
+  }
+  
+  @media ( min-width : 1000px ) {
+  
+    .category {
+      left: 28vw;
+    }
+  }
+  
+  @media ( max-width : 1000px ) {
+  
+    .category {
+      width: 25%;
+    }
+  }
+  
+  .category h2 {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    font-size: 2em;
+    font-weight: 700;
+  }
+  
+  .startContainer {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .startRecipesContainer {
+    align-items: center;
+    background-color: #fcc436;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    margin: 20px;
+    width: 90vw;
+  
+  }
+  
+  .startRecipesContainer h1 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 14.35px;
+    margin-top: 5px;
+  }
+  
+  .nextButtonContainer {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .nextButton {
+    background-color: #fcc436;
+    border: 0.55px solid black;
+    border-radius: 5%;
+    color: white;
+    font-weight: 700;
+    width: 200px;
+  }
+  
+  .link { 
+    background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+    text-decoration: none;
+  }
