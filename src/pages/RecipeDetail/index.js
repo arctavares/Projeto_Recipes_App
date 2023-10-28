@@ -10,10 +10,28 @@ function RecipeDetail() {
   const [info, setInfo] = useState({});
   const [data, setData] = useState([]);
   const [numberOfRecommendedClicks, setNumberOfRecommendedClicks] = useState(1);
+  const [doneRecipe, setDoneRecipe] = useState(false);
 
   const param = useParams();
   const location = useLocation();
   const url = location.pathname;
+
+  useEffect(() => {
+    const object = {
+      doneRecipes: [] };
+    localStorage.setItem('doneRecipes', JSON.stringify(object));
+
+    const doneRecipesResponse = localStorage.getItem('doneRecipes');
+    const getRecipesDone = JSON.parse(doneRecipesResponse);
+    console.log(typeof (getRecipesDone));
+
+    getRecipesDone.doneRecipes.forEach((recipe) => {
+      console.log(recipe.strMeal, info.strMeal, recipe.strMeal === info.strMeal);
+      if (recipe.strMeal === info.strMeal) {
+        setDoneRecipe(true);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -112,14 +130,19 @@ function RecipeDetail() {
           </button>
         </div>
       </div>
-      <div className={ styles.startContainer }>
-        <div
-          className={ styles.startRecipesContainer }
-          data-testid="start-recipe-btn"
-        >
-          <h1>START RECIPE</h1>
-        </div>
-      </div>
+      {
+        !doneRecipe && (
+          <div className={ styles.startContainer }>
+            <div
+              className={ styles.startRecipesContainer }
+              data-testid="start-recipe-btn"
+            >
+              <h1>START RECIPE</h1>
+            </div>
+          </div>
+        )
+      }
+
     </div>
   );
 }
