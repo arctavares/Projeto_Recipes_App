@@ -64,33 +64,21 @@ function RecipeInProgress() {
   }
 
   function isRecipeAlreadyAdded(storedArray, newItem) {
-    return storedArray.some((item) => item && item.id && newItem && newItem.id && item.id === newItem.id);
+    return storedArray.some((item) => item?.idMeal === newItem?.idMeal);
   }
 
   function addToLocalStorage(key, item) {
-    // Obtém o objeto do localStorage
     const storedData = JSON.parse(localStorage.getItem(key)) || { doneRecipes: [] };
+    console.log('Stored Data Before:', storedData);
 
-    // Verifica se o novo item já está presente no array
-    if (!isRecipeAlreadyAdded(storedData.doneRecipes, item.doneRecipes)) {
-      // Adiciona o novo item à propriedade doneRecipes do objeto
-      storedData.doneRecipes.push(item.doneRecipes);
-
-      // Salva o objeto modificado de volta no localStorage
+    if (item
+      && storedData.doneRecipes
+      && !isRecipeAlreadyAdded(storedData.doneRecipes, item)) {
+      storedData.doneRecipes.push(item);
       localStorage.setItem(key, JSON.stringify(storedData));
     }
-  }
 
-  function addToLocalStorage(key, item) {
-    const storedData = JSON.parse(localStorage.getItem(key)) || { doneRecipes: [] };
-    const newItem = item.doneRecipes;
-
-    if (storedData.doneRecipes && newItem) {
-      if (!isRecipeAlreadyAdded(storedData.doneRecipes, newItem)) {
-        storedData.doneRecipes.push(newItem);
-        localStorage.setItem(key, JSON.stringify(storedData));
-      }
-    }
+    console.log('Stored Data After:', storedData);
   }
 
   function handleAddToLocalStorage() {
@@ -105,7 +93,7 @@ function RecipeInProgress() {
       doneDate: dataFormatada,
     };
 
-    addToLocalStorage('doneRecipes', { doneRecipes: updatedInfo });
+    addToLocalStorage('doneRecipes', updatedInfo);
     navigate('/done-recipes');
   }
 

@@ -5,6 +5,7 @@ import AllDoneRecipe from '../../images/AllDoneRecipes.png';
 import drinks from '../../images/drinks.png';
 import foods from '../../images/foods.png';
 import styles from './index.module.css';
+import share from '../../images/Share.png';
 
 function DoneRecipes() {
   const {
@@ -25,23 +26,27 @@ function DoneRecipes() {
       <div className={ styles.cardContainer }>
         <div className={ styles.imgContainer }>
           {
-          recipe?.strMealThumb && <img src={ recipe.strMealThumb } alt="recipe" />
-        }
-          </div>
+            recipe?.strMealThumb && <img src={ recipe.strMealThumb } alt="recipe" />
+          }
+        </div>
         <div>
           {recipe?.strMeal && recipe?.strArea && recipe?.strCategory && (
-          <div className={ styles.titleAndSubtitle }>
-            <h1>{recipe.strMeal}</h1>
-            <h2>
-              {recipe.strArea}
-              {' '}
-              *
-              {' '}
-              {recipe.strCategory}
-            </h2>
-          </div>
-          )
-          }
+            <div className={ styles.infoContainer }>
+              <div className={ styles.titleAndSubtitle }>
+                <h1>{recipe.strMeal}</h1>
+                <h2>
+                  {recipe.strArea}
+                  {' '}
+                  *
+                  {' '}
+                  {recipe.strCategory}
+                </h2>
+              </div>
+              <div>
+                <img src={ share } alt="share" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -49,19 +54,19 @@ function DoneRecipes() {
 
   return (
     <>
-      <Header showTopBtn={false} />
-      <div className={styles.navContent}>
-        <img src={AllDoneRecipe} alt="AllDoneRecipes" />
-        <img src={drinks} alt="Drinks" />
-        <img src={foods} alt="Foods" />
+      <Header showTopBtn={ false } />
+      <div className={ styles.navContent }>
+        <img src={ AllDoneRecipe } alt="AllDoneRecipes" />
+        <img src={ drinks } alt="Drinks" />
+        <img src={ foods } alt="Foods" />
       </div>
-      <div className={styles.MainCardsContainer}>
-        {doneRecipes !== undefined &&
-        doneRecipes.length !== 0 &&
-        doneRecipes.map((recipe) => {
+      <div className={ styles.MainCardsContainer }>
+        {doneRecipes !== undefined
+        && doneRecipes.length !== 0
+        && doneRecipes.map((recipe) => {
           const safeRecipe = recipe ?? {}; // Coalescência nula para evitar null ou undefined
           return (
-            <div className={styles.cardsContainer} key={safeRecipe.idMeal}>
+            <div className={ styles.cardsContainer } key={ safeRecipe.idMeal }>
               {returnCard(safeRecipe)}
             </div>
           );
@@ -69,7 +74,6 @@ function DoneRecipes() {
       </div>
     </>
   );
-  
 }
 
 export default DoneRecipes;

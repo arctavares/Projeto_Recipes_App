@@ -27,13 +27,13 @@ function RecipeDetail() {
     console.log(typeof (getRecipesDone));
 
     getRecipesDone.doneRecipes.forEach((recipe) => {
-      if (recipe?.strMeal != null && info?.strMeal !== null && recipe.strMeal === info.strMeal) {
+      if (recipe?.strMeal != null
+        && info?.strMeal !== null
+        && recipe.strMeal === info.strMeal) {
         setDoneRecipe(true);
-      }                 
+      }
     });
   }, []);
-
-
 
   useEffect(() => {
     async function fetchData() {
