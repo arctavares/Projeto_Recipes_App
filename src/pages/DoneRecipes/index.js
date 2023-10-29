@@ -55,7 +55,7 @@ function DoneRecipes() {
           </div>
           <div className={ styles.tag }>
             {recipe?.strTags
-            && recipe.strTags.split(',').map((tag, index) => (
+            && recipe.strTags.split(',').splice(0, 2).map((tag, index) => (
               <div key={ index } className={ styles.tagItem }>
                 {tag.trim()}
               </div>
