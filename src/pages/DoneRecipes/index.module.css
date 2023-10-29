@@ -1,4 +1,50 @@
 .navContent {
   display: flex;
   justify-content: space-around;
+  margin-top: -2vh;
+}
+
+@media ( min-width : 1000px ) {
+
+  .navContent {
+    margin-top: -8vh;
+  }
+}
+
+.cardContainer {
+  border: 0.52px solid #b1b1b1;
+  border-radius: 5%;
+  display: flex;
+  margin: 5vh 2vh 2vh;
+
+}
+
+.imgContainer img {
+  border-bottom-left-radius: 5%;
+  border-end-start-radius: 5%;
+  width: 45vw;
+}
+
+.titleAndSubtitle {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.titleAndSubtitle h1 {
+  align-items: center;
+  color: #1a1b1c;
+  display: flex;
+  font-size: 1.5em;
+  justify-content: center;
+  margin-top: 15px;
+  text-align: center;
+  width: 45vw;
+}
+
+.titleAndSubtitle h2 {
+  color: #797d86;
+  font-size: 1em;
+  font-weight: 300;
 }
