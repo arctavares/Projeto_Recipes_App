@@ -26,7 +26,11 @@ function App() {
             <Route path="/meals/:id" element={ <RecipeDetail /> } />
             <Route path="/drinks/:id" element={ <RecipeDetail /> } />
             <Route exact path="/meals/:id/in-progress" element={ <RecipeInProgress /> } />
-            <Route exact path="/drinks/:id/in-progress" element={ <RecipeInProgress /> } />
+            <Route
+              exact
+              path="/drinks/:id/in-progress"
+              element={ <RecipeInProgress /> }
+            />
           </Routes>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../../context';
 import RecipeCard from '../RecipeCard';
 import styles from './index.module.css';
@@ -14,16 +14,19 @@ function Recipes() {
     setData,
   } = useContext(RecipesContext);
   const MAX_CARDS = 12;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       let newData;
+      setLoading(true);
       if (currentTitle === 'Meals') {
         newData = await startMealsData();
       } else {
         newData = await startDrinksData();
       }
       setData(newData);
+      setLoading(false);
     }
 
     if (
@@ -48,6 +51,7 @@ function Recipes() {
               info={ card }
               index={ index }
               key={ card[currentTitle === 'Meals' ? 'idMeal' : 'idDrink'] }
+              loading={ loading }
             />
           ))
         }

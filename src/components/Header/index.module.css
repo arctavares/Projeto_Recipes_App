@@ -4,11 +4,18 @@
   height: 100%;
 }
 
+@media ( min-width : 1000px ) {
+
+  .HeaderContainer {
+    max-height: 45vh;
+  }
+}
+
 .nav {
   background-color: #fcdc36;
   display: flex;
-  height: 40%;
-  min-height: 40%;
+  height: 20vh;
+  min-height: 20vh;
 }
 
 .appTitle {
@@ -51,6 +58,30 @@
   height: 70%;
 }
 
+@media ( min-width : 1000px ) {
+
+  .RecipesIcon {
+    height: 80%;
+  }
+
+  .RecipesTitle {
+    height: 50%;
+  }
+
+  .searchIcon {
+    height: 70%;
+  }
+
+  .profileIcon {
+    height: 70%;
+  }
+
+  .nav {
+    max-height: 5vh;
+    min-height: 5vh;
+  }
+}
+
 .titleContainer {
   align-items: center;
   display: flex;
@@ -70,6 +101,14 @@
   width: 10vw;
 }
 
+@media ( max-width : 600px ) {
+
+  .nav {
+    max-height: 5vh;
+    min-height: 10vh;
+  }
+}
+
 @media ( min-width : 600px ) {
 
   .drinkOrPlateIcon {
@@ -77,8 +116,8 @@
   }
 
   .nav {
-    max-height: 30%;
-    min-height: 30%;
+    max-height: 15vh;
+    min-height: 15vh;
   }
 }
 
@@ -88,12 +127,22 @@
     width: 5vw;
   }
 
+  .nav {
+    max-height: 10vh;
+    min-height: 10vh;
+  }
+
 }
 
 @media ( min-width : 1800px ) {
 
   .drinkOrPlateIcon {
     width: 3vw;
+  }
+
+  .nav {
+    max-height: 8vh;
+    min-height: 8vh;
   }
 
 }

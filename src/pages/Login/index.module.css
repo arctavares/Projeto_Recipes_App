@@ -7,6 +7,13 @@
   width: 100vw;
 }
 
+@media ( min-width : 1000px ) {
+
+  .LoginContainer {
+    width: 50vw;
+  }
+}
+
 .LogoContainer {
   background-color: #41197f;
   color: white;

@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { getMealById } from '../../service/MealsAPI';
-import { filterDrinkByName, getDrinkById } from '../../service/DrinksAPI';
+import { getDrinkById } from '../../service/DrinksAPI';
 import YouTubeEmbed from '../../YoutubeEmbeded';
 import styles from './index.module.css';
 
 function RecipeInProgress() {
   const [info, setInfo] = useState({});
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [allChecked, setAllChecked] = useState(false);
   const [checked, setChecked] = useState([]);
-  const [checkBoxSize, setCheckBoxSize] = useState(0);
+  const Size = Object.keys(info)
+    .filter((ingredient) => ingredient.includes('Ingredient')
+    && info[ingredient] !== ''
+    && info[ingredient] !== null);
 
   const param = useParams();
   const location = useLocation();
@@ -25,8 +28,6 @@ function RecipeInProgress() {
         newData = await getDrinkById(param.id);
       }
       setInfo(newData);
-      const drinksData = await filterDrinkByName('');
-      setData(drinksData);
     }
     fetchData();
   }, [param.id, url]);
@@ -43,26 +44,22 @@ function RecipeInProgress() {
     return null;
   }
 
-  useEffect(() => {
-    const Size = Object.keys(info)
-      .filter((ingredient) => ingredient.includes('Ingredient')
-        && info[ingredient] !== ''
-        && info[ingredient] !== null);
-    setCheckBoxSize(Size);
-  }, []);
-
   function handleCheckboxClick(e) {
     const checkboxName = e.target.name;
+    const isChecked = e.target.checked;
 
-    let check;
-    if (!checked.includes(checkboxName)) {
-      setChecked((prevState) => [...prevState, checkboxName]);
-      check = [...checked, checkboxName];
-      if (checkBoxSize.length === check.length) {
-        setAllChecked(true);
-      } else {
-        setAllChecked(false);
-      }
+    let newChecked;
+
+    if (isChecked) {
+      newChecked = [...checked, checkboxName];
+    } else {
+      newChecked = checked.filter((item) => item !== checkboxName);
+    }
+    setChecked(newChecked);
+    if (Size.length === newChecked.length) {
+      setAllChecked(true);
+    } else {
+      setAllChecked(false);
     }
   }
 
@@ -81,15 +78,14 @@ function RecipeInProgress() {
         </div>
       </div>
       <div className={ styles.category }>
-        <h2 data-testid="recipe-category">
+        <h2 data-testid="recipe-category" className={ styles.recipeCategory }>
           {url.includes('drinks') ? info.strAlcoholic : info.strCategory}
         </h2>
       </div>
       <div className={ styles.ingredientsContainer }>
         <h1>Ingredients</h1>
         <div className={ styles.ingredientsList }>
-          {Object.keys(info)
-            .filter((ingredient) => ingredient.includes('Ingredient') && info[ingredient] !== '' && info[ingredient] !== null)
+          {Size
             .map((ingredient, index) => (
               <div className={ `${styles.checkBoxItem} form-check` } key={ ingredient }>
                 <input
@@ -102,9 +98,14 @@ function RecipeInProgress() {
                 />
                 <label htmlFor={ `ingredient/${index}` } className="form-check-label">
                   {info[ingredient]}
-                  {' '}
-                  -
-                  {info[`strMeasure${index + 1}`]}
+                  {
+                    info[`strMeasure${index + 1}`] !== null && (
+                      <>
+                        {' - '}
+                        {info[`strMeasure${index + 1}`]}
+                      </>
+                    )
+                  }
                 </label>
               </div>
             ))}
