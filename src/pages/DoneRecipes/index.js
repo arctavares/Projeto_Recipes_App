@@ -45,8 +45,22 @@ function DoneRecipes() {
               <div>
                 <img src={ share } alt="share" />
               </div>
+
             </div>
+
           )}
+          <div className={ styles.date }>
+            Done in:
+            {recipe.doneDate}
+          </div>
+          <div className={ styles.tag }>
+            {recipe?.strTags
+            && recipe.strTags.split(',').map((tag, index) => (
+              <div key={ index } className={ styles.tagItem }>
+                {tag.trim()}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

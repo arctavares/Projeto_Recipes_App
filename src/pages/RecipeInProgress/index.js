@@ -86,7 +86,7 @@ function RecipeInProgress() {
     const ano = dataAtual.getFullYear();
     const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
     const dia = String(dataAtual.getDate()).padStart(2, '0');
-    const dataFormatada = `${dia}-${mes}-${ano}`;
+    const dataFormatada = `${dia}/${mes}/${ano}`;
 
     const updatedInfo = {
       ...info,
