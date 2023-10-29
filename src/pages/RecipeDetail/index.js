@@ -17,11 +17,12 @@ function RecipeDetail() {
   const url = location.pathname;
 
   useEffect(() => {
-    const object = {
-      doneRecipes: [] };
-    localStorage.setItem('doneRecipes', JSON.stringify(object));
-
     const doneRecipesResponse = localStorage.getItem('doneRecipes');
+    if (doneRecipesResponse === null) {
+      const object = {
+        doneRecipes: [] };
+      localStorage.setItem('doneRecipes', JSON.stringify(object));
+    }
     const getRecipesDone = JSON.parse(doneRecipesResponse);
     console.log(typeof (getRecipesDone));
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { getMealById } from '../../service/MealsAPI';
 import { getDrinkById } from '../../service/DrinksAPI';
 import YouTubeEmbed from '../../YoutubeEmbeded';
@@ -7,7 +7,6 @@ import styles from './index.module.css';
 
 function RecipeInProgress() {
   const [info, setInfo] = useState({});
-  // const [data, setData] = useState([]);
   const [allChecked, setAllChecked] = useState(false);
   const [checked, setChecked] = useState([]);
   const Size = Object.keys(info)
@@ -18,6 +17,7 @@ function RecipeInProgress() {
   const param = useParams();
   const location = useLocation();
   const url = location.pathname;
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -61,6 +61,31 @@ function RecipeInProgress() {
     } else {
       setAllChecked(false);
     }
+  }
+
+  function isRecipeAlreadyAdded(storedArray, newItem) {
+    // Verifica se o novo item já existe no array
+    return storedArray.some((item) => item.id === newItem.id);
+  }
+
+  function addToLocalStorage(key, item) {
+    // Obtém o objeto do localStorage
+    const storedData = JSON.parse(localStorage.getItem(key)) || { doneRecipes: [] };
+
+    // Verifica se o novo item já está presente no array
+    if (!isRecipeAlreadyAdded(storedData.doneRecipes, item.doneRecipes)) {
+      // Adiciona o novo item à propriedade doneRecipes do objeto
+      storedData.doneRecipes.push(item.doneRecipes);
+
+      // Salva o objeto modificado de volta no localStorage
+      localStorage.setItem(key, JSON.stringify(storedData));
+    }
+  }
+
+  function handleAddToLocalStorage() {
+    const newItem = { doneRecipes: info };
+    addToLocalStorage('doneRecipes', newItem);
+    navigate('/done-recipes');
   }
 
   return (
@@ -120,21 +145,25 @@ function RecipeInProgress() {
       {showYoutubeVideo()}
       {
         allChecked && (
-          <Link
-            to={ url.includes('meals')
-              ? `/meals/${param.id}/in-progress`
-              : `/drinks/${param.id}/in-progress` }
-            className={ styles.link }
+          <div
+            className={ styles.startContainer }
+            onClick={ handleAddToLocalStorage }
+            onKeyDown={ (e) => {
+              if (e.key === 'Enter') {
+                handleAddToLocalStorage();
+              }
+            } }
+            role="button"
+            tabIndex={ 0 }
+            aria-label="Custom Button"
           >
-            <div className={ styles.startContainer }>
-              <div
-                className={ styles.startRecipesContainer }
-                data-testid="start-recipe-btn"
-              >
-                <h1>FINISH RECIPE</h1>
-              </div>
+            <div
+              className={ styles.startRecipesContainer }
+              data-testid="start-recipe-btn"
+            >
+              <h1>FINISH RECIPE</h1>
             </div>
-          </Link>
+          </div>
         )
       }
 
