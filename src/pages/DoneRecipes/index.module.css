@@ -19,6 +19,10 @@
 
 }
 
+.imgContainer {
+  border: none;
+}
+
 .imgContainer img {
   border-bottom-left-radius: 5%;
   border-end-start-radius: 5%;

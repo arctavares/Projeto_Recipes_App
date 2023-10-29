@@ -64,8 +64,7 @@ function RecipeInProgress() {
   }
 
   function isRecipeAlreadyAdded(storedArray, newItem) {
-    // Verifica se o novo item já existe no array
-    return storedArray.some((item) => item.id === newItem.id);
+    return storedArray.some((item) => item && item.id && newItem && newItem.id && item.id === newItem.id);
   }
 
   function addToLocalStorage(key, item) {
@@ -82,9 +81,31 @@ function RecipeInProgress() {
     }
   }
 
+  function addToLocalStorage(key, item) {
+    const storedData = JSON.parse(localStorage.getItem(key)) || { doneRecipes: [] };
+    const newItem = item.doneRecipes;
+
+    if (storedData.doneRecipes && newItem) {
+      if (!isRecipeAlreadyAdded(storedData.doneRecipes, newItem)) {
+        storedData.doneRecipes.push(newItem);
+        localStorage.setItem(key, JSON.stringify(storedData));
+      }
+    }
+  }
+
   function handleAddToLocalStorage() {
-    const newItem = { doneRecipes: info };
-    addToLocalStorage('doneRecipes', newItem);
+    const dataAtual = new Date();
+    const ano = dataAtual.getFullYear();
+    const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+    const dia = String(dataAtual.getDate()).padStart(2, '0');
+    const dataFormatada = `${dia}-${mes}-${ano}`;
+
+    const updatedInfo = {
+      ...info,
+      doneDate: dataFormatada,
+    };
+
+    addToLocalStorage('doneRecipes', { doneRecipes: updatedInfo });
     navigate('/done-recipes');
   }
 
