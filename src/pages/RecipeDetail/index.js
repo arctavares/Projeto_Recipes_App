@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { getMealById } from '../../service/MealsAPI';
+import { filterByName, getMealById } from '../../service/MealsAPI';
 import { filterDrinkByName, getDrinkById } from '../../service/DrinksAPI';
 import YouTubeEmbed from '../../YoutubeEmbeded';
 import styles from './index.module.css';
@@ -18,6 +18,7 @@ function RecipeDetail() {
   const [doneRecipe, setDoneRecipe] = useState(false);
   const [showCopiedUrlMessage, setShowCopiedUrlMessage] = useState(false);
   const [currentLike, setCurrentLike] = useState('');
+  const [oppositeData, setOppositeData] = useState([]);
 
   const param = useParams();
   const location = useLocation();
@@ -32,7 +33,6 @@ function RecipeDetail() {
       localStorage.setItem('doneRecipes', JSON.stringify(object));
     }
     const getRecipesDone = JSON.parse(doneRecipesResponse);
-    console.log(typeof (getRecipesDone));
 
     getRecipesDone.doneRecipes.forEach((recipe) => {
       if (recipe?.strMeal != null
@@ -54,6 +54,8 @@ function RecipeDetail() {
       setInfo(newData);
       const drinksData = await filterDrinkByName('');
       setData(drinksData);
+      const mealsData = await filterByName(' ');
+      setOppositeData(mealsData);
     }
     fetchData();
   }, [param.id, url]);
@@ -70,15 +72,20 @@ function RecipeDetail() {
     return null;
   }
 
-  useEffect(() => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-
-    const isLiked = favoriteRecipes.some((recipe) => (recipe?.idMeal
+  function isDuplicateOrIsLiked(favorites) {
+    const isLiked = favorites.some((recipe) => (recipe?.idMeal
       ? recipe.idMeal
       : recipe.idDrink) === (info?.idMeal
       ? info.idMeal
       : info.idDrink));
-  
+    return isLiked;
+  }
+
+  useEffect(() => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+    const isLiked = isDuplicateOrIsLiked(favoriteRecipes);
+
     if (isLiked) {
       setCurrentLike(like);
     } else {
@@ -88,11 +95,7 @@ function RecipeDetail() {
 
   function handleLikeClick() {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isDuplicate = favoriteRecipes.some((recipe) => (recipe?.idMeal
-      ? recipe.idMeal
-      : recipe.idDrink) === (info?.idMeal
-      ? info.idMeal
-      : info.idDrink));
+    const isDuplicate = isDuplicateOrIsLiked(favoriteRecipes);
 
     if (!isDuplicate) {
       favoriteRecipes.push(info);
@@ -177,9 +180,10 @@ function RecipeDetail() {
 
       <div>
         <h1 className={ styles.recommendedTitle }>Recommended</h1>
-        {data.length !== 0
+        {data.length !== 0 && oppositeData.length !== 0
           && <Recommended
             data={ data }
+            oppositeData={ oppositeData }
             recommendedMaxIndex={ numberOfRecommendedClicks * 2 }
             url={ url }
           />}

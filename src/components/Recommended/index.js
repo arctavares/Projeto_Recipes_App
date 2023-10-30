@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.module.css';
 
-function Recommended({ data, recommendedMaxIndex, url }) {
+function Recommended({ data, recommendedMaxIndex, url, oppositeData }) {
   const [six, setSix] = useState([]);
 
   function getRandomSixNumbers(n) {
     const MIN_ARRAY_LENGTH = 6;
+    console.log(n);
     if (n < MIN_ARRAY_LENGTH) {
       throw new Error('The array length must be at least 6.');
     }
@@ -25,14 +26,15 @@ function Recommended({ data, recommendedMaxIndex, url }) {
   useEffect(() => {
     const EXACT_NUMBER_OF_SIX = 6;
     if (six.length !== EXACT_NUMBER_OF_SIX) {
-      const dataLength = data.length;
+      const dataLength = oppositeData.length;
       const SixSelected = getRandomSixNumbers(dataLength);
       setSix(SixSelected);
     }
   }, [data, six]);
 
   const slicedItems = six.slice(recommendedMaxIndex - 2, recommendedMaxIndex);
-
+  console.log(slicedItems);
+  console.log(six);
   return (
     <div className={ styles.recommendedContainer }>
       {slicedItems.map((recipeIndex, index) => (
@@ -44,14 +46,16 @@ function Recommended({ data, recommendedMaxIndex, url }) {
           <img
             src={ url.includes('meals')
               ? data[recipeIndex].strDrinkThumb
-              : data[recipeIndex].strMealThumb }
-            alt={ data[recipeIndex].strInstructions }
+              : oppositeData[recipeIndex].strMealThumb }
+            alt={ url.includes('meals')
+              ? data[recipeIndex].strDrink
+              : oppositeData[recipeIndex].strMeal }
           />
           <div>
             <h2 data-testid={ `${recipeIndex}-recommendation-title` }>
               {url.includes('meals')
                 ? data[recipeIndex].strDrink
-                : data[recipeIndex].strMeal}
+                : oppositeData[recipeIndex].strMeal}
             </h2>
           </div>
         </div>
@@ -74,4 +78,10 @@ Recommended.propTypes = {
   ).isRequired,
   recommendedMaxIndex: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
+  oppositeData: PropTypes.arrayOf(
+    PropTypes.shape({
+      strMealThumb: PropTypes.string.isRequired,
+      strMeal: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
 };
