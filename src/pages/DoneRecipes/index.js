@@ -12,6 +12,7 @@ function DoneRecipes() {
     setCurrentTitle,
   } = useContext(RecipesContext);
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [filter, setFilter] = useState('All');
 
   setCurrentTitle('Done Recipes');
 
@@ -21,8 +22,8 @@ function DoneRecipes() {
   }, []);
 
   function returnCard(recipe) {
-    // console.log(recipe.StrMeal)
     return (
+
       <div className={ styles.cardContainer }>
         <div className={ styles.imgContainer }>
           {
@@ -71,25 +72,39 @@ function DoneRecipes() {
     );
   }
 
+  function filterRecipes() {
+    if (filter === 'All') {
+      return doneRecipes;
+    } if (filter === 'drinks') {
+      return doneRecipes.filter((recipe) => recipe.drinkOrMeal === 'drink');
+    } if (filter === 'meals') {
+      return doneRecipes.filter((recipe) => recipe.drinkOrMeal === 'meal');
+    }
+    return [];
+  }
+
+  const filteredRecipes = filterRecipes();
+
   return (
     <>
       <Header showTopBtn={ false } />
       <div className={ styles.navContent }>
-        <img src={ AllDoneRecipe } alt="AllDoneRecipes" />
-        <img src={ drinks } alt="Drinks" />
-        <img src={ foods } alt="Foods" />
+        <button type="button" onClick={ () => setFilter('All') }>
+          <img src={ AllDoneRecipe } alt="AllDoneRecipes" />
+        </button>
+        <button type="button" onClick={ () => setFilter('drinks') }>
+          <img src={ drinks } alt="Drinks" />
+        </button>
+        <button type="button" onClick={ () => setFilter('meals') }>
+          <img src={ foods } alt="Foods" />
+        </button>
       </div>
       <div className={ styles.MainCardsContainer }>
-        {doneRecipes !== undefined
-        && doneRecipes.length !== 0
-        && doneRecipes.map((recipe) => {
-          const safeRecipe = recipe ?? {}; // Coalescência nula para evitar null ou undefined
-          return (
-            <div className={ styles.cardsContainer } key={ safeRecipe.idMeal }>
-              {returnCard(safeRecipe)}
-            </div>
-          );
-        })}
+        {filteredRecipes.map((recipe) => (
+          <div className={ styles.cardsContainer } key={ recipe.idMeal }>
+            {returnCard(recipe)}
+          </div>
+        ))}
       </div>
     </>
   );
