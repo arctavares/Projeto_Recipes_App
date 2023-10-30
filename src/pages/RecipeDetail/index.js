@@ -5,6 +5,8 @@ import { filterDrinkByName, getDrinkById } from '../../service/DrinksAPI';
 import YouTubeEmbed from '../../YoutubeEmbeded';
 import styles from './index.module.css';
 import Recommended from '../../components/Recommended';
+import like from '../../images/like.png';
+import share from '../../images/Share.png';
 
 function RecipeDetail() {
   const [info, setInfo] = useState({});
@@ -62,6 +64,18 @@ function RecipeDetail() {
     return null;
   }
 
+  function handleLikeClick() {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isDuplicate = favoriteRecipes.some((recipe) => recipe.id === info.id);
+
+    if (!isDuplicate) {
+      favoriteRecipes.push(info);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    } else {
+      global.alert('This recipe is already on the favorites');
+    }
+  }
+
   const MAX_NUMBER_OF_CLICKS = 3;
   return (
     <div className={ styles.recipeDetailContainer }>
@@ -70,11 +84,20 @@ function RecipeDetail() {
           src={ url.includes('drinks') ? info.strDrinkThumb : info.strMealThumb }
           alt={ url.includes('drinks') ? info.strDrinkThumb : info.strMealThumb }
           data-testid="recipe-photo"
+          className={ styles.recipeImg }
         />
         <div className={ styles.centered }>
           <h1 data-testid="recipe-title">
             {url.includes('drinks') ? info.strDrink : info.strMeal}
           </h1>
+        </div>
+        <div className={ styles.icons }>
+          <button type="button" onClick={ handleLikeClick }>
+            <img src={ like } alt="like" />
+          </button>
+          <button type="button">
+            <img src={ share } alt="share" />
+          </button>
         </div>
       </div>
       <div className={ styles.category }>
