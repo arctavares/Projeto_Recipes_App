@@ -6,6 +6,7 @@ import YouTubeEmbed from '../../YoutubeEmbeded';
 import styles from './index.module.css';
 import Recommended from '../../components/Recommended';
 import like from '../../images/like.png';
+import likeEmpty from '../../images/likeEmpty.png';
 import share from '../../images/Share.png';
 
 const copy = require('clipboard-copy');
@@ -16,6 +17,7 @@ function RecipeDetail() {
   const [numberOfRecommendedClicks, setNumberOfRecommendedClicks] = useState(1);
   const [doneRecipe, setDoneRecipe] = useState(false);
   const [showCopiedUrlMessage, setShowCopiedUrlMessage] = useState(false);
+  const [currentLike, setCurrentLike] = useState('');
 
   const param = useParams();
   const location = useLocation();
@@ -68,6 +70,22 @@ function RecipeDetail() {
     return null;
   }
 
+  useEffect(() => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+    const isLiked = favoriteRecipes.some((recipe) => (recipe?.idMeal
+      ? recipe.idMeal
+      : recipe.idDrink) === (info?.idMeal
+      ? info.idMeal
+      : info.idDrink));
+  
+    if (isLiked) {
+      setCurrentLike(like);
+    } else {
+      setCurrentLike(likeEmpty);
+    }
+  }, [info]);
+
   function handleLikeClick() {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isDuplicate = favoriteRecipes.some((recipe) => (recipe?.idMeal
@@ -79,6 +97,7 @@ function RecipeDetail() {
     if (!isDuplicate) {
       favoriteRecipes.push(info);
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+      setCurrentLike(like);
     } else {
       global.alert('This recipe is already on the favorites');
     }
@@ -110,7 +129,7 @@ function RecipeDetail() {
         </div>
         <div className={ styles.icons }>
           <button type="button" onClick={ handleLikeClick }>
-            <img src={ like } alt="like" />
+            <img src={ currentLike } alt="like" />
           </button>
           <button type="button" onClick={ handleShareClick }>
             <img src={ share } alt="share" />
