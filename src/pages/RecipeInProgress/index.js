@@ -88,9 +88,12 @@ function RecipeInProgress() {
     const dia = String(dataAtual.getDate()).padStart(2, '0');
     const dataFormatada = `${dia}/${mes}/${ano}`;
 
+    const mealOrDrink = url.includes('meals') ? 'meal' : 'drink';
+
     const updatedInfo = {
       ...info,
       doneDate: dataFormatada,
+      drinkOrMeal: mealOrDrink,
     };
 
     addToLocalStorage('doneRecipes', updatedInfo);

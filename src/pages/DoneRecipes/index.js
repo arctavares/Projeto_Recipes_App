@@ -21,19 +21,24 @@ function DoneRecipes() {
   }, []);
 
   function returnCard(recipe) {
-    console.log(recipe);
+    // console.log(recipe.StrMeal)
     return (
       <div className={ styles.cardContainer }>
         <div className={ styles.imgContainer }>
           {
-            recipe?.strMealThumb && <img src={ recipe.strMealThumb } alt="recipe" />
+            (recipe?.strMealThumb
+              || recipe?.strDrinkThumb)
+              && <img src={ recipe.strMealThumb || recipe.strDrinkThumb } alt="recipe" />
           }
         </div>
         <div>
-          {recipe?.strMeal && recipe?.strArea && recipe?.strCategory && (
+          {((recipe?.strMeal || recipe?.strDrink)
+          && (recipe.strArea
+          || recipe.strAlcoholic)
+          && recipe?.strCategory) && (
             <div className={ styles.infoContainer }>
               <div className={ styles.titleAndSubtitle }>
-                <h1>{recipe.strMeal}</h1>
+                <h1>{recipe.strMeal !== undefined ? recipe.strMeal : recipe.strDrink}</h1>
                 <h2>
                   {recipe.strArea}
                   {' '}
@@ -54,7 +59,7 @@ function DoneRecipes() {
             {recipe.doneDate}
           </div>
           <div className={ styles.tag }>
-            {recipe?.strTags
+            {recipe?.strTags && recipe.strTags !== null
             && recipe.strTags.split(',').splice(0, 2).map((tag, index) => (
               <div key={ index } className={ styles.tagItem }>
                 {tag.trim()}
