@@ -8,7 +8,7 @@ import styles from './index.module.css';
 function RecipeInProgress() {
   const [info, setInfo] = useState({});
   const [allChecked, setAllChecked] = useState(false);
-  const [checkedIngredients, setCheckedIngredients] = useState([]);
+  const [checkedIngredients, setCheckedIngredients] = useState({});
 
   const Size = Object.keys(info)
     .filter((ingredient) => ingredient.includes('Ingredient')
@@ -34,9 +34,12 @@ function RecipeInProgress() {
   }, [param.id, url]);
 
   useEffect(() => {
-    const savedIngredients = JSON.parse(localStorage.getItem('checkedIngredients')) || [];
+    const savedIngredients = JSON.parse(localStorage.getItem('checkedIngredients')) || {};
     setCheckedIngredients(savedIngredients);
-    setAllChecked(savedIngredients.length === Size.length);
+    setAllChecked(
+      Object.keys(savedIngredients).length === Size.length
+        && Object.values(savedIngredients).every((ingredient) => ingredient.length),
+    );
   }, [Size.length]);
 
   useEffect(() => {
@@ -56,15 +59,26 @@ function RecipeInProgress() {
   }
 
   function handleCheckboxClick(index) {
-    const updatedIngredients = [...checkedIngredients];
-    if (updatedIngredients.includes(index)) {
-      updatedIngredients.splice(updatedIngredients.indexOf(index), 1);
+    const mealName = info.strMeal;
+    const updatedIngredients = { ...checkedIngredients };
+
+    if (!updatedIngredients[mealName]) {
+      updatedIngredients[mealName] = [];
+    }
+
+    const ingredientIndex = updatedIngredients[mealName].indexOf(index);
+
+    const INDEX_ERROR = -1;
+    if (ingredientIndex !== INDEX_ERROR) {
+      updatedIngredients[mealName].splice(ingredientIndex, 1);
     } else {
-      updatedIngredients.push(index);
+      updatedIngredients[mealName].push(index);
     }
 
     setCheckedIngredients(updatedIngredients);
-    setAllChecked(updatedIngredients.length === Size.length);
+    setAllChecked(
+      updatedIngredients[mealName].length === Size.length,
+    );
   }
 
   function isRecipeAlreadyAdded(storedArray, newItem) {
@@ -136,9 +150,8 @@ function RecipeInProgress() {
                   name={ `ingredient/${index}` }
                   className="form-check-input"
                   onClick={ () => handleCheckboxClick(index) }
-                  checked={ checkedIngredients.includes(index) }
+                  checked={ checkedIngredients[info.strMeal]?.includes(index) || false }
                 />
-                {console.log(checkedIngredients, checkedIngredients.includes(index))}
                 <label htmlFor={ `ingredient/${index}` } className="form-check-label">
                   {info[ingredient]}
                   {
