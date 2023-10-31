@@ -83,9 +83,7 @@ function RecipeDetail() {
 
   useEffect(() => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-
     const isLiked = isDuplicateOrIsLiked(favoriteRecipes);
-
     if (isLiked) {
       setCurrentLike(like);
     } else {
@@ -93,13 +91,36 @@ function RecipeDetail() {
     }
   }, [info]);
 
+  function isRecipeAlreadyAdded(storedArray, newItem) {
+    return storedArray.some((item) => item?.idMeal === newItem?.idMeal);
+  }
+
+  function addToLocalStorage(key, item) {
+    const storedData = JSON.parse(localStorage.getItem(key)) || [];
+    if (item
+      && storedData
+      && !isRecipeAlreadyAdded(storedData, item)) {
+      storedData.push(item);
+      localStorage.setItem(key, JSON.stringify(storedData));
+    }
+  }
+
+  function handleAddToLocalStorage() {
+    const mealOrDrink = url.includes('meals') ? 'meal' : 'drink';
+    const updatedInfo = {
+      ...info,
+      drinkOrMeal: mealOrDrink,
+    };
+    addToLocalStorage('favoriteRecipes', updatedInfo);
+  }
+
   function handleLikeClick() {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isDuplicate = isDuplicateOrIsLiked(favoriteRecipes);
-
     if (!isDuplicate) {
       favoriteRecipes.push(info);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+      // localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+      handleAddToLocalStorage();
       setCurrentLike(like);
     } else {
       global.alert('This recipe is already on the favorites');

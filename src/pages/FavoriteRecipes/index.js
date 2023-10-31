@@ -75,8 +75,7 @@ function DoneRecipes() {
         </div>
         <div>
           {((recipe?.strMeal || recipe?.strDrink)
-          && (recipe.strArea
-          || recipe.strAlcoholic)
+          && (recipe?.strArea || recipe?.strAlcoholic)
           && recipe?.strCategory) && (
             <div className={ styles.infoContainer }>
               <div className={ styles.titleAndSubtitle }>
@@ -90,7 +89,7 @@ function DoneRecipes() {
                   recipe,
                 )}
                 <h2>
-                  {recipe.strArea}
+                  {recipe.strArea || recipe.strAlcoholic}
                   {' '}
                   *
                   {' '}
