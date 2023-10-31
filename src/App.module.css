@@ -5,12 +5,15 @@
 @media ( min-width : 1000px ) {
 
   .mainDiv {
+    background-color: #41197f;
     display: flex;
     justify-content: center;
     width: 100%;
   }
 
   .contentContainer {
+    background-color: white;
+    margin-bottom: 50px;
     width: 50%;
   }
 }

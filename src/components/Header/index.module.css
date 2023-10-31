@@ -7,7 +7,6 @@
 @media ( min-width : 1000px ) {
 
   .HeaderContainer {
-    border: 1px solid black;
     height: 100%;
     margin-bottom: 5vh;
   }
@@ -98,6 +97,7 @@
   color: #41197f;
   font-family: Epilogue , sans-serif;
   font-weight: 900;
+  letter-spacing: 3px;
 }
 
 .drinkOrPlateIcon {

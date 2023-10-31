@@ -8,6 +8,8 @@ import searchIcon from '../../images/searchIcon.png';
 import profileIcon from '../../images/profileIcon.png';
 import DrinkIcon from '../../images/icone-drink.png';
 import PlateIcon from '../../images/icone-prato.png';
+import DoneIcon from '../../images/DoneIcon.png';
+import FavoriteIcon from '../../images/FavoritesIcon.png';
 import SearchBar from '../SearchBar/SearchBar';
 import RecipesContext from '../../context';
 
@@ -26,6 +28,14 @@ function Header({ showTopBtn = true }) {
     } if (title.toLowerCase() === 'drinks') {
       return (
         <img src={ DrinkIcon } alt="Drink" className={ styles.drinkOrPlateIcon } />
+      );
+    } if (title.toLowerCase() === 'done recipes') {
+      return (
+        <img src={ DoneIcon } alt="Done Recipes" className={ styles.drinkOrPlateIcon } />
+      );
+    } if (title.toLowerCase() === 'favorites') {
+      return (
+        <img src={ FavoriteIcon } alt="Favorites" className={ styles.drinkOrPlateIcon } />
       );
     }
   }
