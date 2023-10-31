@@ -1,122 +1,122 @@
 .navContent {
-    display: flex;
-    justify-content: space-around;
-    margin-top: -2vh;
-  }
-  
-  .navContent button {
-    background: none;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    font: inherit;
-    outline: inherit;
-    padding: 0;
-  }
-  
-  @media ( min-width : 1000px ) {
-  
-    .navContent {
-      margin-top: -8vh;
-    }
-  }
-  
-  .cardContainer {
-    border: 0.52px solid #b1b1b1;
-    border-radius: 5%;
-    display: flex;
-    margin: 5vh 2vh 2vh;
-  
-  }
-  
-  .imgContainer {
-    border: none;
-  }
-  
-  .imgContainer img {
-    border-bottom-left-radius: 5%;
-    border-end-start-radius: 5%;
-    width: 45vw;
-  }
-  
-  .titleAndSubtitle {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .titleAndSubtitle h1 {
-    align-items: center;
-    color: #1a1b1c;
-    display: flex;
-    font-size: 1.5em;
-    justify-content: center;
-    margin-top: 15px;
-    text-align: center;
-    width: 45vw;
-  }
-  
-  .titleAndSubtitle h2 {
-    color: #797d86;
-    font-size: 1em;
-    font-weight: 300;
-  }
-  
-  .infoContainer {
-    align-items: start;
-    display: flex;
-    justify-content: center;
-    width: 45vw;
-  }
-  
-  .infoContainer img {
-    margin-left: -30px;
-    margin-top: 20px;
-  }
-  
-  .date {
-    font-size: 0.8em;
-    text-align: center;
-  }
-  
-  .tag {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 5vh;
-  }
-  
-  .tagItem {
-    background-color: #d9d9d9;
-    border-radius: 10px;
-    color: #797d86;
-    padding: 5px;
-  }
-  
-  a {
-    text-decoration: none;
-  }
-  
-  .icons {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: space-around;
+  margin-top: -2vh;
+}
 
-  .icons button { 
-    background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
-  }
+.navContent button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  outline: inherit;
+  padding: 0;
+}
 
-  .copiedMessage p {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: white;
-    height: 100%;
-    margin-top: 20px;
-    text-align: center;
+@media ( min-width : 1000px ) {
+
+  .navContent {
+    margin-top: -8vh;
   }
+}
+
+.cardContainer {
+  border: 0.52px solid #b1b1b1;
+  border-radius: 5%;
+  display: flex;
+  margin: 5vh 2vh 2vh;
+
+}
+
+.imgContainer {
+  border: none;
+}
+
+.imgContainer img {
+  border-bottom-left-radius: 5%;
+  border-end-start-radius: 5%;
+  width: 45vw;
+}
+
+.titleAndSubtitle {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.titleAndSubtitle h1 {
+  align-items: center;
+  color: #1a1b1c;
+  display: flex;
+  font-size: 1.5em;
+  justify-content: center;
+  margin-top: 15px;
+  text-align: center;
+  width: 45vw;
+}
+
+.titleAndSubtitle h2 {
+  color: #797d86;
+  font-size: 1em;
+  font-weight: 300;
+}
+
+.infoContainer {
+  align-items: start;
+  display: flex;
+  justify-content: center;
+  width: 45vw;
+}
+
+.infoContainer img {
+  margin-left: -30px;
+  margin-top: 20px;
+}
+
+.date {
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.tag {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5vh;
+}
+
+.tagItem {
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  color: #797d86;
+  padding: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.icons {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.icons button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  outline: inherit;
+  padding: 0;
+}
+
+.copiedMessage p {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  height: 100%;
+  margin-top: 20px;
+  text-align: center;
+}

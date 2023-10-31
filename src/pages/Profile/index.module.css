@@ -1,0 +1,32 @@
+.imgContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: space-around;
+}
+
+.imgContainer img {
+  width: 70vw;
+}
+
+.imgButton {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  height: 10vh;
+  outline: inherit;
+  padding: 0;
+}
+
+.emailContainer {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.emailContainer h1 {
+  font-size: 1.5em;
+}
