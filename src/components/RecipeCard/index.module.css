@@ -41,6 +41,16 @@
   max-width: 45%;
 }
 
+.loadingContainer {
+  align-items: center;
+  border: 0.55px solid #b1b1b1;
+  border-radius: 5px;
+  display: flex;
+  height: 166.21px;
+  justify-content: center;
+  width: 163.35px;
+}
+
 @media ( min-width : 1000px ) {
 
   .cardContainer {

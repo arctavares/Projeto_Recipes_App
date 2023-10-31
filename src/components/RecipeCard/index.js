@@ -15,7 +15,7 @@ function RecipeCard({ info, index, loading }) {
       }
     >
       <div className={ styles.cardContainer }>
-        {loading ? 'loading...' : (
+        {loading ? <div className={ styles.loadingContainer }><p>loading...</p></div> : (
           <div className={ styles.card } data-testid={ `${index}-recipe-card` }>
             <img
               src={ currentTitle === 'Meals' ? info.strMealThumb : info.strDrinkThumb }
@@ -46,8 +46,8 @@ RecipeCard.propTypes = {
     strDrink: PropTypes.string,
     strMealThumb: PropTypes.string,
     strDrinkThumb: PropTypes.string,
-    idMeal: PropTypes.number,
-    idDrink: PropTypes.number,
+    idMeal: PropTypes.string,
+    idDrink: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
