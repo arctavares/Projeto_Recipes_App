@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import RecipesContext from '../../context';
 import AllDoneRecipe from '../../images/AllDoneRecipes.png';
@@ -21,6 +22,20 @@ function DoneRecipes() {
     setDoneRecipes(data.doneRecipes);
   }, []);
 
+  function returnLink(HTML, recipe) {
+    return (
+      <Link
+        to={ `/${recipe?.strMeal
+          ? 'meals'
+          : 'drinks'}/${recipe?.idMeal
+          ? recipe.idMeal
+          : recipe.idDrink}` }
+      >
+        {HTML}
+      </Link>
+    );
+  }
+
   function returnCard(recipe) {
     return (
 
@@ -29,7 +44,14 @@ function DoneRecipes() {
           {
             (recipe?.strMealThumb
               || recipe?.strDrinkThumb)
-              && <img src={ recipe.strMealThumb || recipe.strDrinkThumb } alt="recipe" />
+              && returnLink(
+                <img
+                  src={ recipe.strMealThumb
+                  || recipe.strDrinkThumb }
+                  alt="recipe"
+                />,
+                recipe,
+              )
           }
         </div>
         <div>
@@ -39,7 +61,15 @@ function DoneRecipes() {
           && recipe?.strCategory) && (
             <div className={ styles.infoContainer }>
               <div className={ styles.titleAndSubtitle }>
-                <h1>{recipe.strMeal !== undefined ? recipe.strMeal : recipe.strDrink}</h1>
+                {returnLink(
+                  <h1>
+                    {recipe
+                      .strMeal !== undefined
+                      ? recipe.strMeal
+                      : recipe.strDrink}
+                  </h1>,
+                  recipe,
+                )}
                 <h2>
                   {recipe.strArea}
                   {' '}
