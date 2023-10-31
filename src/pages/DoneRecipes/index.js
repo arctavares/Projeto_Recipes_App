@@ -54,7 +54,7 @@ function DoneRecipes() {
               )
           }
         </div>
-        <div>
+        <div className={ styles.infosContainer }>
           {((recipe?.strMeal || recipe?.strDrink)
           && (recipe.strArea
           || recipe.strAlcoholic)
@@ -78,7 +78,7 @@ function DoneRecipes() {
                   {recipe.strCategory}
                 </h2>
               </div>
-              <div>
+              <div className={ styles.shareIcon }>
                 <img src={ share } alt="share" />
               </div>
 
@@ -130,11 +130,16 @@ function DoneRecipes() {
         </button>
       </div>
       <div className={ styles.MainCardsContainer }>
-        {filteredRecipes.map((recipe) => (
+        {filteredRecipes.length !== 0 ? filteredRecipes.map((recipe) => (
           <div className={ styles.cardsContainer } key={ recipe.idMeal }>
             {returnCard(recipe)}
           </div>
-        ))}
+        ))
+          : (
+            <div className={ styles.noRecipesFoundContainer }>
+              <h1>No recipes found!</h1>
+            </div>
+          )}
       </div>
     </>
   );

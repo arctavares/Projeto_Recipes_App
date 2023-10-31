@@ -14,19 +14,12 @@
   padding: 0;
 }
 
-@media ( min-width : 1000px ) {
-
-  .navContent {
-    margin-top: -8vh;
-  }
-}
 
 .cardContainer {
   border: 0.52px solid #b1b1b1;
   border-radius: 5%;
   display: flex;
   margin: 5vh 2vh 2vh;
-
 }
 
 .imgContainer {
@@ -95,4 +88,49 @@
 
 a {
   text-decoration: none;
+}
+
+.noRecipesFoundContainer {
+  align-items: center;
+  display: flex;
+  height: 40vw;
+  justify-content: center;
+}
+
+
+@media ( min-width : 1000px ) {
+
+  .navContent {
+    margin-top: -4vh;
+  }
+
+  .cardContainer {
+    width: 45vw;
+  }
+
+  .infoContainer {
+    align-items: center;
+    display: flex;
+    height: 10vw;
+    justify-content: space-evenly;
+    width: 25vw;
+  }
+
+  .imgContainer img {
+    width: 20vw;
+  }
+
+  .infosContainer {
+    width: 25vw;
+  }
+
+  .titleAndSubtitle {
+    width: 25vw;
+
+  }
+
+  .noRecipesFoundContainer {
+    height: 65vh;
+  }
+
 }
