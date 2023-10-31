@@ -132,11 +132,15 @@ function DoneRecipes() {
 
   function filterRecipes() {
     if (filter === 'All') {
-      return favoriteRecipes;
+      return favoriteRecipes || [];
     } if (filter === 'drinks') {
-      return favoriteRecipes.filter((recipe) => recipe.drinkOrMeal === 'drink');
+      return favoriteRecipes
+      && favoriteRecipes
+        .filter((recipe) => recipe.drinkOrMeal === 'drink');
     } if (filter === 'meals') {
-      return favoriteRecipes.filter((recipe) => recipe.drinkOrMeal === 'meal');
+      return favoriteRecipes
+      && favoriteRecipes
+        .filter((recipe) => recipe.drinkOrMeal === 'meal');
     }
     return [];
   }
@@ -163,12 +167,16 @@ function DoneRecipes() {
         </div>
       )}
       <div className={ styles.MainCardsContainer }>
-        {filteredRecipes.map((recipe) => (
+        {filteredRecipes.length !== 0 ? filteredRecipes.map((recipe) => (
           <div className={ styles.cardsContainer } key={ recipe.idMeal }>
             {returnCard(recipe)}
-
           </div>
-        ))}
+        ))
+          : (
+            <div className={ styles.noRecipesFoundContainer }>
+              <h1>No recipes found!</h1>
+            </div>
+          )}
       </div>
     </>
   );
