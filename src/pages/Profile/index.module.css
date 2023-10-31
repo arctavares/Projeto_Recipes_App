@@ -30,3 +30,14 @@
 .emailContainer h1 {
   font-size: 1.5em;
 }
+
+@media ( min-width : 1000px ) {
+
+  .imgContainer img {
+    width: 20vw;
+  }
+
+  .imgContainer {
+    height: 70vh;
+  }
+}
