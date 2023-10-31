@@ -87,7 +87,6 @@ function RecipeInProgress() {
 
   function addToLocalStorage(key, item) {
     const storedData = JSON.parse(localStorage.getItem(key)) || { doneRecipes: [] };
-    console.log('Stored Data Before:', storedData);
 
     if (item
       && storedData.doneRecipes
@@ -95,8 +94,6 @@ function RecipeInProgress() {
       storedData.doneRecipes.push(item);
       localStorage.setItem(key, JSON.stringify(storedData));
     }
-
-    console.log('Stored Data After:', storedData);
   }
 
   function handleAddToLocalStorage() {
@@ -117,6 +114,18 @@ function RecipeInProgress() {
     addToLocalStorage('doneRecipes', updatedInfo);
     navigate('/done-recipes');
   }
+
+  useEffect(() => {
+    if (info && Size && checkedIngredients) {
+      const storedIngredients = checkedIngredients[info.strMeal || info.strDrink] || [];
+      storedIngredients.sort((a, b) => a - b);
+
+      const addedOne = storedIngredients.map((ingredient) => ingredient + 1);
+      const isAllChecked = addedOne.length === Size.length;
+
+      setAllChecked(isAllChecked);
+    }
+  }, [checkedIngredients, info, Size]);
 
   return (
     <div className={ styles.recipeDetailContainer }>
