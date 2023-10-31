@@ -149,10 +149,17 @@ function RecipeInProgress() {
                   id={ `ingredient/${index}` }
                   name={ `ingredient/${index}` }
                   className="form-check-input"
-                  onClick={ () => handleCheckboxClick(index) }
+                  onChange={ () => handleCheckboxClick(index) }
                   checked={ checkedIngredients[info.strMeal]?.includes(index) || false }
                 />
-                <label htmlFor={ `ingredient/${index}` } className="form-check-label">
+                <label
+                  htmlFor={ `ingredient/${index}` }
+                  className={
+                    `form-check-label 
+                    ${checkedIngredients[info.strMeal]?.includes(index)
+                && styles.checked}`
+                  }
+                >
                   {info[ingredient]}
                   {
                     info[`strMeasure${index + 1}`] !== null && (

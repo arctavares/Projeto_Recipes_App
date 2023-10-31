@@ -33,8 +33,6 @@ function Recommended({ data, recommendedMaxIndex, url, oppositeData }) {
   }, [data, six]);
 
   const slicedItems = six.slice(recommendedMaxIndex - 2, recommendedMaxIndex);
-  console.log(slicedItems);
-  console.log(six);
   return (
     <div className={ styles.recommendedContainer }>
       {slicedItems.map((recipeIndex, index) => (
