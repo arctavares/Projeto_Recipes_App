@@ -30,57 +30,65 @@ function Header({ showTopBtn = true }) {
     }
   }
 
-  return (
-    <div className={ styles.HeaderContainer }>
-      <div className={ styles.nav }>
-        <div className={ styles.appTitle }>
-          <img
-            src={ RecipesAppIcon }
-            alt="Recipes App"
-            className={ styles.RecipesIcon }
-          />
-          <img
-            src={ RecipesAppTitle }
-            alt="Recipes App Title"
-            className={ styles.RecipesTitle }
-          />
-        </div>
-        <div className={ styles.icons }>
-          {
-            showTopBtn && (
-              <button
-                type="button"
-                onClick={ () => setSearchInputDisabled(!searchInputDisabled) }
-              >
-                <img
-                  src={ searchIcon }
-                  alt="searchIcon"
-                  className={ styles.searchIcon }
-                  data-testid="search-top-btn"
+  function profileLink() {
+    return (
+      <Link to="/profile">
+        <img
+          src={ `${profileIcon}profileIcon` }
+          alt="Profile"
+          className={ styles.profileIcon }
+          data-testid="profile-top-btn"
+        />
+      </Link>
+    );
+  }
 
-                />
-              </button>
-            )
-          }
-          <Link to="/profile">
+  return (
+    <div className={ styles.mainDiv }>
+      <div className={ styles.HeaderContainer }>
+        <div className={ styles.nav }>
+          <div className={ styles.appTitle }>
             <img
-              src={ `${profileIcon}profileIcon` }
-              alt="Profile"
-              className={ styles.profileIcon }
-              data-testid="profile-top-btn"
+              src={ RecipesAppIcon }
+              alt="Recipes App"
+              className={ styles.RecipesIcon }
             />
-          </Link>
+            <img
+              src={ RecipesAppTitle }
+              alt="Recipes App Title"
+              className={ styles.RecipesTitle }
+            />
+          </div>
+          <div className={ styles.icons }>
+            {
+              showTopBtn && (
+                <button
+                  type="button"
+                  onClick={ () => setSearchInputDisabled(!searchInputDisabled) }
+                >
+                  <img
+                    src={ searchIcon }
+                    alt="searchIcon"
+                    className={ styles.searchIcon }
+                    data-testid="search-top-btn"
+
+                  />
+                </button>
+              )
+            }
+            {profileLink()}
+          </div>
         </div>
+        <div className={ styles.titleContainer }>
+          {showDrinkOrPlate()}
+          <h1 className={ styles.title } data-testid="page-title">{title}</h1>
+        </div>
+        {
+          searchInputDisabled ? '' : (
+            <SearchBar />
+          )
+        }
       </div>
-      <div className={ styles.titleContainer }>
-        {showDrinkOrPlate()}
-        <h1 className={ styles.title } data-testid="page-title">{title}</h1>
-      </div>
-      {
-        searchInputDisabled ? '' : (
-          <SearchBar />
-        )
-      }
     </div>
   );
 }

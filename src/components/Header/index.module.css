@@ -7,8 +7,11 @@
 @media ( min-width : 1000px ) {
 
   .HeaderContainer {
-    max-height: 45vh;
+    border: 1px solid black;
+    height: 100%;
+    margin-bottom: 5vh;
   }
+
 }
 
 .nav {
@@ -130,6 +133,10 @@
   .nav {
     max-height: 10vh;
     min-height: 10vh;
+  }
+
+  .icons {
+    min-width: 15vw;
   }
 
 }
