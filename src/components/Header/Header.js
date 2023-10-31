@@ -71,7 +71,6 @@ function Header({ showTopBtn = true }) {
                     alt="searchIcon"
                     className={ styles.searchIcon }
                     data-testid="search-top-btn"
-
                   />
                 </button>
               )

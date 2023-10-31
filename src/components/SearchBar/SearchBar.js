@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import styles from './index.module.css';
-
+import RecipesContext from '../../context';
 import {
   filterByFirstLetter,
   filterByIngredient,
@@ -10,113 +10,47 @@ import {
 import {
   filterDrinkByFirstLetter,
   filterDrinkByIngredient,
-  filterDrinkByName } from '../../service/DrinksAPI';
-import RecipesContext from '../../context';
+  filterDrinkByName,
+} from '../../service/DrinksAPI';
 
 function SearchBar() {
-  const {
-    currentTitle: title,
-    setData,
-  } = useContext(RecipesContext);
-
+  const { currentTitle: title, setData } = useContext(RecipesContext);
   const navigate = useNavigate();
+  const [searchType, setSearchType] = useState('ingredient');
+  const [searchValue, setSearchValue] = useState('');
 
-  const [radioBtn, setRadioBtn] = useState('');
-  const [mealOrDrinksData, setMealOrDrinksData] = useState([]);
-  const [input, setInput] = useState('');
+  const handleInputChange = useCallback((e) => {
+    setSearchValue(e.target.value);
+  }, []);
 
-  const redirect = (data) => {
-    if (data && data.length === 1) {
-      navigate(title === 'Meals'
-        ? `/meals/${data[0].idMeal}`
-        : `/drinks/${data[0].idDrink}`);
+  const handleButtonClick = useCallback(async () => {
+    if (searchValue.length > 1 && searchType === 'firstLetter') {
+      global.alert('Your search must have only 1 (one) character');
+      return;
     }
-  };
 
-  const alert = (data) => {
-    if (data === null) {
-      global
-        .alert(
-          'Sorry, we haven\'t found any recipes for these filters.',
-        );
-    }
-  };
-
-  const callFunctions = (data) => {
-    setMealOrDrinksData(data);
-    alert(data);
-    redirect(data);
-  };
-
-  async function handleClick() {
-    if (radioBtn === 'ingredient') {
-      const data = (title === 'Meals')
-        ? await filterByIngredient(input)
-        : await filterDrinkByIngredient(input);
-      callFunctions(data);
-    } else if (radioBtn === 'name') {
-      const data = title === 'Meals'
-        ? await filterByName(input)
-        : await filterDrinkByName(input);
-      callFunctions(data);
-    } else if (radioBtn === 'firstLetter') {
-      if (input.length === 1) {
-        const data = title === 'Meals'
-          ? await filterByFirstLetter(input)
-          : await filterDrinkByFirstLetter(input);
-        callFunctions(data);
-      } else if (input.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
+    let data;
+    if (title === 'Meals') {
+      if (searchType === 'ingredient') {
+        data = await filterByIngredient(searchValue);
+      } else if (searchType === 'name') {
+        data = await filterByName(searchValue);
+      } else {
+        data = await filterByFirstLetter(searchValue);
       }
+    } else if (searchType === 'ingredient') {
+      data = await filterDrinkByIngredient(searchValue);
+    } else if (searchType === 'name') {
+      data = await filterDrinkByName(searchValue);
+    } else {
+      data = await filterDrinkByFirstLetter(searchValue);
     }
-    console.log(mealOrDrinksData);
-  }
 
-  useEffect(() => {
-    setData(mealOrDrinksData);
-  }, [mealOrDrinksData]);
-
-  function renderRadioContainer() {
-    return (
-      <div className={ styles.radioContainer }>
-        <label htmlFor="ingredient">
-          Ingredient
-          <input
-            type="radio"
-            id="ingredient"
-            data-testid="ingredient-search-radio"
-            value="ingredient"
-            name="radioBtn"
-            onChange={ (e) => setRadioBtn(e.target.value) }
-          />
-        </label>
-
-        <label htmlFor="name">
-          Name
-          <input
-            type="radio"
-            id="name"
-            data-testid="name-search-radio"
-            value="name"
-            name="radioBtn"
-            onChange={ (e) => setRadioBtn(e.target.value) }
-          />
-        </label>
-
-        <label htmlFor="firstLetter">
-          First Letter
-          <input
-            type="radio"
-            id="firstLetter"
-            data-testid="first-letter-search-radio"
-            value="firstLetter"
-            name="radioBtn"
-            onChange={ (e) => setRadioBtn(e.target.value) }
-          />
-        </label>
-      </div>
-    );
-  }
+    setData(data);
+    if (data.length === 1) {
+      navigate(`/${title.toLowerCase()}/${data[0].id}`);
+    }
+  }, [searchType, searchValue, title, setData, navigate]);
 
   return (
     <div className={ styles.searchInputContainer }>
@@ -126,20 +60,33 @@ function SearchBar() {
           placeholder="Search"
           data-testid="search-input"
           className="form-control"
-          value={ input }
-          onChange={ (e) => setInput(e.target.value) }
+          value={ searchValue }
+          onChange={ handleInputChange }
         />
-        <div className={ styles.formButtons }>
-          {renderRadioContainer()}
-          <button
-            type="button"
-            className={ `${styles.searchBtn} btn btn-warning` }
-            data-testid="exec-search-btn"
-            onClick={ handleClick }
-          >
-            Search
-          </button>
+        <div className={ styles.radioContainer }>
+          {['ingredient', 'name', 'firstLetter'].map((type) => (
+            <label key={ type } htmlFor={ type }>
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+              <input
+                type="radio"
+                id={ type }
+                data-testid={ `${type}-search-radio` }
+                value={ type }
+                name="searchType"
+                onChange={ () => setSearchType(type) }
+                checked={ searchType === type }
+              />
+            </label>
+          ))}
         </div>
+        <button
+          type="button"
+          className={ `${styles.searchBtn} btn btn-warning` }
+          data-testid="exec-search-btn"
+          onClick={ handleButtonClick }
+        >
+          Search
+        </button>
       </div>
     </div>
   );
