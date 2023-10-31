@@ -119,7 +119,6 @@ function RecipeDetail() {
     const isDuplicate = isDuplicateOrIsLiked(favoriteRecipes);
     if (!isDuplicate) {
       favoriteRecipes.push(info);
-      // localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
       handleAddToLocalStorage();
       setCurrentLike(like);
     } else {

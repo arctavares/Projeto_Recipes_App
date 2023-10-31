@@ -9,6 +9,8 @@ import styles from './index.module.css';
 import share from '../../images/Share.png';
 import like from '../../images/like.png';
 
+const copy = require('clipboard-copy');
+
 function DoneRecipes() {
   const {
     setCurrentTitle,
@@ -16,6 +18,7 @@ function DoneRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [filter, setFilter] = useState('All');
   const [localStorageUpdated, setLocalStorageUpdated] = useState(false);
+  const [showCopiedUrlMessage, setShowCopiedUrlMessage] = useState(false);
 
   setCurrentTitle('Favorites');
 
@@ -53,6 +56,15 @@ function DoneRecipes() {
     const filteredRecipesJSON = JSON.stringify(filteredRecipes);
     localStorage.setItem('favoriteRecipes', filteredRecipesJSON);
     setLocalStorageUpdated(!localStorageUpdated);
+  }
+
+  function shareLink(id, recipe) {
+    const TIME_TO_HIDE_MESSAGE = 5000;
+    copy(`localhost:3000/${recipe?.idMeal ? 'meals' : 'drinks'}/${id}`);
+    setShowCopiedUrlMessage(true);
+    setTimeout(() => {
+      setShowCopiedUrlMessage(false);
+    }, TIME_TO_HIDE_MESSAGE);
   }
 
   function returnCard(recipe) {
@@ -100,7 +112,12 @@ function DoneRecipes() {
 
           )}
           <div className={ styles.icons }>
-            <button type="button">
+            <button
+              type="button"
+              onClick={ () => shareLink(recipe?.idMeal
+                ? recipe.idMeal
+                : recipe.idDrink, recipe) }
+            >
               <img src={ share } alt="share" />
             </button>
             <button type="button" onClick={ () => removeFromFavorites(recipe) }>
@@ -140,6 +157,11 @@ function DoneRecipes() {
           <img src={ foods } alt="Foods" />
         </button>
       </div>
+      {showCopiedUrlMessage && (
+        <div className={ styles.copiedMessage }>
+          <p>Link Copied !!!!</p>
+        </div>
+      )}
       <div className={ styles.MainCardsContainer }>
         {filteredRecipes.map((recipe) => (
           <div className={ styles.cardsContainer } key={ recipe.idMeal }>
