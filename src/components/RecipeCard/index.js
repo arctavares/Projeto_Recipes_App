@@ -1,11 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styles from './index.module.css';
 import RecipesContext from '../../context';
 
-function RecipeCard({ info, index, loading }) {
+function RecipeCard({ info, index, loading, fetchData }) {
   const { currentTitle } = useContext(RecipesContext);
+
+  useEffect(() => {
+    if (!info && !info?.strInstructions) {
+      console.log('works');
+      fetchData();
+    }
+  }, [info]);
+
+  const handleFetchData = useCallback(() => {
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    let timeoutId;
+    const TIME_OUT = 2000;
+
+    if (loading) {
+      timeoutId = setTimeout(() => {
+        handleFetchData();
+      }, TIME_OUT);
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [loading, fetchData]);
 
   return (
     <Link
@@ -48,7 +76,9 @@ RecipeCard.propTypes = {
     strDrinkThumb: PropTypes.string,
     idMeal: PropTypes.string,
     idDrink: PropTypes.string,
+    strInstructions: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
+  fetchData: PropTypes.func.isRequired,
 };
