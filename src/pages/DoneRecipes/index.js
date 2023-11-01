@@ -71,10 +71,7 @@ function DoneRecipes() {
                   recipe,
                 )}
                 <h2>
-                  {recipe.strArea}
-                  {' '}
-                  *
-                  {' '}
+                  {recipe.strArea ? `${recipe.strArea} * ` : ''}
                   {recipe.strCategory}
                 </h2>
               </div>
