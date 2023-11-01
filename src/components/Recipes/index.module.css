@@ -8,7 +8,7 @@
 @media ( min-width : 1000px ) {
 
   .recipesContainer {
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 15px 0 0;
   }
 }
