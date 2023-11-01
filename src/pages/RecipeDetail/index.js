@@ -34,14 +34,18 @@ function RecipeDetail() {
     }
     const getRecipesDone = JSON.parse(doneRecipesResponse);
 
-    getRecipesDone.doneRecipes.forEach((recipe) => {
-      if (recipe?.strMeal != null
-        && info?.strMeal !== null
-        && recipe.strMeal === info.strMeal) {
-        setDoneRecipe(true);
-      }
-    });
-  }, []);
+    if (getRecipesDone?.doneRecipes) {
+      getRecipesDone.doneRecipes.forEach((recipe) => {
+        if (
+          recipe?.strMeal != null
+          && info?.strMeal !== null
+          && recipe.strMeal === info.strMeal
+        ) {
+          setDoneRecipe(true);
+        }
+      });
+    }
+  }, [info]);
 
   useEffect(() => {
     async function fetchData() {
@@ -239,7 +243,6 @@ function RecipeDetail() {
           </Link>
         )
       }
-
     </div>
   );
 }

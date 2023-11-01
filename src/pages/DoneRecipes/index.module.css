@@ -27,8 +27,8 @@
 }
 
 .imgContainer img {
-  border-bottom-left-radius: 5%;
   border-end-start-radius: 5%;
+  border-top-left-radius: 5%;
   width: 45vw;
 }
 
