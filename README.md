@@ -18,6 +18,13 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 -[x] css
 -[x] html
 -[x] css modules
+- [x] Pagina inicial de Login
+- [x] Pagina de receitas, tanto de comidas quanto de bebidas
+- [x] Pagina de detalhes
+- [x] Pagina de receita em progresso
+- [x] Pagina de receitas prontas
+- [x] Pagina de favoritos
+- [x] Pagina de perfil
 <p>O projeto não foi realizado com typescript pois ele não foi idealizado usando essa ferramenta</p>
 <h4 align="center"> 
 	🚀 React App 🚀 Projeto concluido... 🚀
