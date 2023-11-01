@@ -38,6 +38,6 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 
 Feito com ❤️ por Armando Tavares 👋🏽 Entre em contato!
 
-[![Linkedin Badge](https://img.shields.io/badge/-Armando-Tavares?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](www.linkedin.com/in/armando-tavares/) 
+[![Linkedin Badge](https://img.shields.io/badge/-Armando-Tavares?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/armando-tavares/)](www.linkedin.com/in/armando-tavares/) 
 [![Hotmail Badge](https://img.shields.io/badge/-cosilk@hotmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:cosilk@hotmail.com)](mailto:cosilk@hotmail.com)
 
