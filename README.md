@@ -35,3 +35,8 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 - [x] Pagina de receitas prontas
 - [x] Pagina de favoritos
 - [x] Pagina de perfil
+
+Feito com ❤️ por Armando Tavares 👋🏽 Entre em contato!
+
+[![Linkedin Badge](https://img.shields.io/badge/-arctavares?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/armando-tavares/)](https://www.linkedin.com/in/armando-tavares/) 
+
