@@ -20,7 +20,7 @@ function RecipeCard({ info, index, loading, fetchData }) {
 
   useEffect(() => {
     let timeoutId;
-    const TIME_OUT = 2000;
+    const TIME_OUT = 1000;
 
     if (loading) {
       timeoutId = setTimeout(() => {
