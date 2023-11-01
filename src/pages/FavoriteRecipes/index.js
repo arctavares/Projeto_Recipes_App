@@ -136,7 +136,7 @@ function DoneRecipes() {
     } if (filter === 'drinks') {
       return favoriteRecipes
       && favoriteRecipes
-        .filter((recipe) => recipe.drinkOrMeal === 'drink');
+        .filter((recipe) => recipe?.drinkOrMeal && recipe.drinkOrMeal === 'drink');
     } if (filter === 'meals') {
       return favoriteRecipes
       && favoriteRecipes
@@ -167,11 +167,13 @@ function DoneRecipes() {
         </div>
       )}
       <div className={ styles.MainCardsContainer }>
-        {filteredRecipes.length !== 0 ? filteredRecipes.map((recipe) => (
-          <div className={ styles.cardsContainer } key={ recipe.idMeal }>
-            {returnCard(recipe)}
-          </div>
-        ))
+        {(filteredRecipes
+        && filteredRecipes.length !== 0)
+          ? filteredRecipes.map((recipe) => (
+            <div className={ styles.cardsContainer } key={ recipe.idMeal }>
+              {returnCard(recipe)}
+            </div>
+          ))
           : (
             <div className={ styles.noRecipesFoundContainer }>
               <h1>No recipes found!</h1>

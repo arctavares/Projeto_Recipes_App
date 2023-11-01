@@ -64,6 +64,15 @@
 
   .imgContainer {
     height: 20vh;
+    margin-bottom: 50px;
+  }
+
+  .recommendedTitle {
+    margin-left: 1.5vw;
+  }
+
+  .centered {
+    top: 150px;
   }
 }
 

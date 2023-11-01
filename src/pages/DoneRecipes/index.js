@@ -19,7 +19,7 @@ function DoneRecipes() {
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('doneRecipes'));
-    setDoneRecipes(data.doneRecipes);
+    setDoneRecipes(data?.doneRecipes && data.doneRecipes);
   }, []);
 
   function returnLink(HTML, recipe) {

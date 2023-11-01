@@ -59,7 +59,7 @@ function RecipeInProgress() {
   }
 
   function handleCheckboxClick(index) {
-    const mealName = info.strMeal;
+    const mealName = info.strMeal || info.strDrink;
     const updatedIngredients = { ...checkedIngredients };
 
     if (!updatedIngredients[mealName]) {
@@ -159,7 +159,9 @@ function RecipeInProgress() {
                   name={ `ingredient/${index}` }
                   className="form-check-input"
                   onChange={ () => handleCheckboxClick(index) }
-                  checked={ checkedIngredients[info.strMeal]?.includes(index) || false }
+                  checked={ checkedIngredients[
+                    info.strMeal || info.strDrink]
+                    ?.includes(index) || false }
                 />
                 <label
                   htmlFor={ `ingredient/${index}` }

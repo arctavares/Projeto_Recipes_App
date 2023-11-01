@@ -18,7 +18,13 @@ function Recipes() {
   const [error, setError] = useState(null);
 
   async function fetchData() {
+    const FIVE_SECONDS_TO_RELOAD = 5000;
     setLoading(true);
+
+    const timer = setTimeout(() => {
+      window.location.reload();
+    }, FIVE_SECONDS_TO_RELOAD);
+
     try {
       let newData;
       if (currentTitle === 'Meals') {
@@ -31,6 +37,7 @@ function Recipes() {
       console.error(e);
       setError('Error loading data. Please try again later.');
     } finally {
+      clearTimeout(timer);
       setLoading(false);
     }
   }
