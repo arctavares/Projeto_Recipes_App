@@ -10,7 +10,7 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 
 <h1 align=center>Projeto Recipes App</h1>
 <p>Este é um projeto originalmente feito em grupo, porém refiz ele todo sozinho</p>
-<p>É um pagina de receitas onde você pode compartilhar, favoritar e continuar um receita</p>
+<p>É um pagina de receitas onde você pode compartilhar, favoritar e continuar uma receita</p>
 <p>Para abrir o projeto é muito simples, faça um clone do repositorio, instale as dependencias com npm install, e execute com npm start</p>
 <h4 align="center"> 
 	🚀 React App 🚀 Projeto concluido... 🚀
