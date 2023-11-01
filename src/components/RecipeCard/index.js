@@ -22,7 +22,7 @@ function RecipeCard({ info, index, loading, fetchData }) {
     let timeoutId;
     const TIME_OUT = 1000;
 
-    if (loading) {
+    if (loading || Object.keys(info).length === 0) {
       timeoutId = setTimeout(() => {
         handleFetchData();
       }, TIME_OUT);
